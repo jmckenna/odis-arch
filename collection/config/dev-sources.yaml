@@ -74,14 +74,14 @@ sources:
   # INVEMAR Geospatial
   #
   - name: invemargeo
-    propername: CHM LAC - Geospatial
-    catalogue: http://portete.invemar.org.co/chm/
-    domain: http://portete.invemar.org.co
-    logo: http://portete.invemar.org.co/static/images/logo-web.svg
+    propername: Latin America and the Caribbean Region (LAC) Geospatial
+    catalogue: https://portete.invemar.org.co/chm/
+    domain: https://portete.invemar.org.co
+    logo: https://www.invemar.org.co/o/invemar-actual-theme/images/logoWebINVEMAR.png
     #missing ODISCat entry
     pid: https://oceaninfohub.org/.well-known/org/invemarvessels
     sourcetype: sitegraph
-    url: http://portete.invemar.org.co/chm/api/oih/platformgeo?format=json
+    url: https://portete.invemar.org.co/chm/api/oih/platformgeo?format=json
     changefreq:
     backend: INVEMAR CHM
     headless: false
@@ -94,19 +94,37 @@ sources:
   #
   - name: marineie
     propername: Marine Institute Data Catalogue (Ireland)
-    catalogue: http://data.marine.ie/geonetwork/srv/eng/catalog.search 
-    domain: http://data.marine.ie
-    logo: https://data.marine.ie/geonetwork/images/logos/b8055c35-285d-400a-a29f-fb308ced07c2.png?random1692727716243
-    #missing ODISCat entry
-    pid: https://oceaninfohub.org/.well-known/org/marineie  
+    catalogue: https://data.marine.ie/geonetwork/srv/eng/catalog.search
+    domain: https://data.marine.ie
+    logo: https://data.marine.ie/geonetwork/images/logos/494b5d66-a774-4a7e-86f0-c860cc21331b.png
+    pid: https://catalogue.odis.org/view/193
     sourcetype: sitemap
-    url: http://data.marine.ie/geonetwork/srv/eng/portal.sitemap
+    url: https://data.marine.ie/geonetwork/srv/api/sitemap
     changefreq: daily
     backend: GeoNetwork
     headless: false
     dateadded: 2023-08-22
     cron: 0 9 * * 0 
     active: true
+  #
+  # NCEI Marine Microplastics Catalogue
+  #    
+  #
+  - name: ncei
+    propername: NCEI Marine Microplastics Catalogue
+    catalogue: https://experience.arcgis.com/experience/b296879cc1984fda833a8acc93e31476 
+    domain: https://www.ncei.noaa.gov/products/microplastics
+    logo: https://www.ncei.noaa.gov/themes/custom/ncei/logo.svg
+    #missing ODISCat entry
+    pid: https://oceaninfohub.org/.well-known/org/ncei 
+    sourcetype: sitemap
+    url: https://raw.githubusercontent.com/iodepo/odis-arch/master/collection/tempHosting/data-ncei/sitemap.xml
+    changefreq: monthly
+    backend: ArcGIS
+    headless: false
+    dateadded: 2024-01-24
+    cron: 0 2 * * 0 
+    active: true    
   #
   # ODIS Catalogue
   #
@@ -124,7 +142,25 @@ sources:
     headless: false
     dateadded: 2023-10-19
     cron: 0 11 * * 0 
-    active: true     
+    active: true
+  #
+  # Aquatic Sciences and Fisheries Abstracts (OpenASFA)
+  #
+  - name: openasfa
+    propername: Aquatic Sciences and Fisheries Abstracts (OpenASFA)
+    catalogue: https://www.fao.org/fishery/en/openasfa
+    domain: https://www.fao.org/fishery/en
+    logo: https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/FAO_logo.svg/180px-FAO_logo.svg.png
+    pid: https://catalogue.odis.org/view/3277
+    sourcetype: sitemap
+    url: https://www.fao.org/fishery/sitemap/fishery_openasfa_en.xml
+    #url: https://www.fao.org/fishery/sitemap.xml
+    changefreq: monthly
+    backend: Custom
+    headless: false
+    dateadded: 2024-02-02
+    cron: 0 11 * * 0 
+    active: true    
   #
   # Observing System Monitoring Center
   #
@@ -147,7 +183,7 @@ sources:
   # POGO
   # 
   - name: pogo
-    propername: Partnership for Observation of the Global Ocean
+    propername: Partnership for Observation of the Global Ocean (POGO)
     catalogue: https://pogo-ocean.org/
     domain: https://geoblueplanet.org/
     logo: https://pogo-ocean.org/wp-content/uploads/2020/02/POGO1_long-01-768x135.png
@@ -158,7 +194,23 @@ sources:
     backend: WordPress  
     headless: false
     dateadded: 2022-11-30
-    active: false  
+    active: false
+  #
+  # UNEP Data Catalogue (also referred to as "WESR" or "GEMS Ocean")
+  # 
+  - name: unep
+    propername: UNEP Data Catalogue
+    catalogue: https://datacatalog.unep.org/app 
+    domain: https://www.unep.org/
+    logo: https://upload.wikimedia.org/wikipedia/en/thumb/9/9b/UNEP_logo.svg/195px-UNEP_logo.svg.png
+    pid: https://catalogue.odis.org/view/3288
+    sourcetype: sitemap
+    url: https://datacatalog.unep.org/en/oceans_sitemap.xml
+    changefreq: monthly 
+    backend: CKAN  
+    headless: false
+    dateadded: 2024-01-22
+    active: true    
   #
   # VLIZ: Flanders Marine Institute catalogue
   #   note: VLIZ & EMODNet services were unified in late 2022 
@@ -175,6 +227,22 @@ sources:
   #   headless: false
   #   dateadded: 2022-08-03
   #   active: false
+  #
+  # WIO Symphony
+  # 
+  - name: wiosymphony
+    propername: WIO (Western Indian Ocean) Symphony
+    catalogue: https://symphony.nairobiconvention.org/login
+    domain: https://www.nairobiconvention.org/wio-symphony/
+    logo: https://www.nairobiconvention.org/wp-content/uploads/2019/05/nairobic_logo.png
+    pid: https://catalogue.odis.org/view/3290
+    sourcetype: sitemap
+    url: https://raw.githubusercontent.com/WIOSymphony/wiosym/main/metadata/sitemap.xml
+    changefreq: monthly 
+    backend: Custom  
+    headless: false
+    dateadded: 2024-01-24
+    active: true  
   #
   # Leibniz Center for Tropical Marine Research (ZMT)
   # 

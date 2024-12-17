@@ -18,24 +18,6 @@
 #    python -c 'import yaml, sys; yaml.safe_load(sys.stdin)' < sources.yaml
 sources:
   #
-  # British Oceanographic Data Centre
-  #
-  - name: bodc
-    propername: British Oceanographic Data Centre (BODC)
-    catalogue: https://www.bodc.ac.uk/data/bodc_database/nodb/search/
-    domain: https://www.bodc.ac.uk/
-    logo: https://www.bodc.ac.uk/assets/img/bodc-logo-colour-white.png
-    #missing ODISCat entry
-    pid: https://oceaninfohub.org/.well-known/org/bodc
-    sourcetype: sitemap
-    url: https://api.linked-systems.uk/sitemap_pap_api.xml
-    changefreq: monthly
-    backend: Custom
-    headless: false
-    dateadded: 2023-07-10
-    cron: 0 7 * * 0 
-    active: true
-  #
   # Canary Current Large Marine Ecosystem (CCLME)
   #
   - name: cclme
@@ -53,159 +35,20 @@ sources:
     cron: 0 2 * * 0
     active: true
   #
-  # INCOIS
+  # Indonesia National Oceanic Data Center
   #
-  - name: incois
-    propername: Indian National Centre for Ocean Information Services
-    catalogue: https://incois.gov.in/essdp/
-    domain: https://incois.gov.in/
-    logo: https://incois.gov.in/essdp/images/logo.png
-    #missing ODISCat entry
-    pid: https://oceaninfohub.org/.well-known/org/incois
+  - name: inanodc
+    propername: Indonesia National Oceanic Data Center
+    catalogue: https://geonode.nodc.id
+    domain: https://nodc.id
+    logo: https://nodc.id/dist/img/brin.png
+    pid: https://catalogue.odis.org/view/3246
     sourcetype: sitemap
-    url: https://incois.gov.in/essdp/xml/sitemap.xml
-    changefreq:
-    backend: Custom
+    url: https://geonode.nodc.id/sitemap.xml
+    #url: https://raw.githubusercontent.com/iodepo/odis-arch/master/collection/tempHosting/data-ina-nodc/ina-nodc-simple-graph.json
+    changefreq: on demand
+    backend: GeoNode
     headless: false
-    dateadded: 2024-04-15
-    cron: 0 9 * * 0 
-    active: true    
-  #
-  # INVEMAR Geospatial
-  #
-  - name: invemargeo
-    propername: Latin America and the Caribbean Region (LAC) Geospatial
-    catalogue: https://portete.invemar.org.co/chm/
-    domain: https://portete.invemar.org.co
-    logo: https://www.invemar.org.co/o/invemar-actual-theme/images/logoWebINVEMAR.png
-    #missing ODISCat entry
-    pid: https://oceaninfohub.org/.well-known/org/invemargeo
-    sourcetype: sitegraph
-    url: https://portete.invemar.org.co/chm/api/oih/platformgeo?format=json
-    changefreq:
-    backend: INVEMAR CHM
-    headless: false
-    dateadded: 2023-08-22
-    cron: 0 8 * * 0 
+    dateadded: 2022-04-05
     active: true
-  #
-  # Marine Institute Data Catalogue
-  #    
-  #
-  - name: marineie
-    propername: Marine Institute Data Catalogue (Ireland)
-    catalogue: https://data.marine.ie/geonetwork/srv/eng/catalog.search
-    domain: https://data.marine.ie
-    logo: https://data.marine.ie/geonetwork/images/logos/494b5d66-a774-4a7e-86f0-c860cc21331b.png
-    pid: https://catalogue.odis.org/view/193
-    sourcetype: sitemap
-    url: https://data.marine.ie/geonetwork/srv/api/sitemap
-    changefreq: daily
-    backend: GeoNetwork
-    headless: false
-    dateadded: 2023-08-22
-    cron: 0 9 * * 0 
-    active: true
-  #
-  # NCEI Marine Microplastics Catalogue
-  #    
-  #
-  - name: ncei
-    propername: NCEI Marine Microplastics Catalogue
-    catalogue: https://experience.arcgis.com/experience/b296879cc1984fda833a8acc93e31476 
-    domain: https://www.ncei.noaa.gov/products/microplastics
-    logo: https://www.ncei.noaa.gov/themes/custom/ncei/logo.svg
-    #missing ODISCat entry
-    pid: https://oceaninfohub.org/.well-known/org/ncei 
-    sourcetype: sitemap
-    url: https://raw.githubusercontent.com/iodepo/odis-arch/master/collection/tempHosting/data-ncei/sitemap.xml
-    changefreq: monthly
-    backend: ArcGIS
-    headless: false
-    dateadded: 2024-01-24
-    cron: 0 2 * * 0 
-    active: true    
-  #
-  # ODIS Catalogue
-  #
-  - name: odiscat
-    propername: ODIS Catalogue (ODISCat)
-    catalogue: https://catalogue.odis.org/
-    domain: https://odis.org/
-    logo: https://gatewaygeomatics.com/dl/odis/odis-catalogue-logo.png
-    #missing ODISCat entry
-    pid: https://oceaninfohub.org/.well-known/org/odiscat
-    sourcetype: sitemap
-    url: https://stag.catalogue.odis.org/sitemapIndex.xml
-    changefreq: daily
-    backend: Custom
-    headless: false
-    dateadded: 2023-10-19
-    cron: 0 11 * * 0 
-    active: true
-  #
-  # Aquatic Sciences and Fisheries Abstracts (OpenASFA)
-  #
-  - name: openasfa
-    propername: Aquatic Sciences and Fisheries Abstracts (OpenASFA)
-    catalogue: https://www.fao.org/fishery/en/openasfa
-    domain: https://www.fao.org/fishery/en
-    logo: https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/FAO_logo.svg/180px-FAO_logo.svg.png
-    pid: https://catalogue.odis.org/view/3277
-    sourcetype: sitemap
-    url: https://www.fao.org/fishery/sitemap/fishery_openasfa_en.xml
-    #url: https://www.fao.org/fishery/sitemap.xml
-    changefreq: monthly
-    backend: Custom
-    headless: false
-    dateadded: 2024-02-02
-    cron: 0 11 * * 0 
-    active: true   
-  #
-  # POGO
-  # 
-  - name: pogo
-    propername: Partnership for Observation of the Global Ocean (POGO)
-    catalogue: https://pogo-ocean.org/
-    domain: https://geoblueplanet.org/
-    logo: https://pogo-ocean.org/wp-content/uploads/2020/02/POGO1_long-01-768x135.png
-    pid: https://catalogue.odis.org/view/3247
-    sourcetype: sitemap
-    url: https://pogo-ocean.org/pogo-member-sitemap.xml
-    changefreq: as needed  
-    backend: WordPress  
-    headless: false
-    dateadded: 2022-11-30
-    active: false
-  #
-  # UNEP Data Catalogue (also referred to as "WESR" or "GEMS Ocean")
-  # 
-  - name: unep
-    propername: UNEP Data Catalogue
-    catalogue: https://datacatalog.unep.org/app 
-    domain: https://www.unep.org/
-    logo: https://upload.wikimedia.org/wikipedia/en/thumb/9/9b/UNEP_logo.svg/195px-UNEP_logo.svg.png
-    pid: https://catalogue.odis.org/view/3288
-    sourcetype: sitemap
-    url: https://datacatalog.unep.org/en/oceans_sitemap.xml
-    changefreq: monthly 
-    backend: CKAN  
-    headless: false
-    dateadded: 2024-01-22
-    active: true
-  #
-  # WIO Symphony
-  # 
-  - name: wiosymphony
-    propername: WIO (Western Indian Ocean) Symphony
-    catalogue: https://symphony.nairobiconvention.org/login
-    domain: https://www.nairobiconvention.org/wio-symphony/
-    logo: https://www.nairobiconvention.org/wp-content/uploads/2019/05/nairobic_logo.png
-    pid: https://catalogue.odis.org/view/3290
-    sourcetype: sitemap
-    url: https://raw.githubusercontent.com/WIOSymphony/wiosym/main/metadata/sitemap.xml
-    changefreq: monthly 
-    backend: Custom  
-    headless: false
-    dateadded: 2024-01-24
-    active: true
+    cron: 0 10 * * 0      

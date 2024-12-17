@@ -112,7 +112,7 @@ prefix and then the vocabulary namespace.  We could then use terms from that voc
 following the same prefix:term pattern.
 
 
-```{literalinclude} ../../../odis-in/dataGraphs/thematics/spatial/graphs/geosparqlsimple.json
+```{literalinclude} ../../odis-in/dataGraphs/thematics/spatial/graphs/geosparqlsimple.json
 :emphasize-lines: 4, 9, 11, 15
 :linenos:
 ```
@@ -147,6 +147,13 @@ It should be noted this is the not the ID for the object being described but rat
 If you are describing a dataset with a DOI, for example, the @id is not that DOI.  Rather it is the 
 ID, potentially the URL, for the metadata record about that dataset.  Your dataset ID would be included
 in the metadata record using the the identifier property. 
+```
+
+```{tip}
+@id should point to whatever resolves eventually to the JSON-LD - if you only
+have an external JSON-LD file (and not embedded into the html `<script>` tag)
+then the @id should point to the .json file itself. Otherwise, @id should point
+to the landing page of the record (HTML page), that embeds the JSON-LD.
 ```
 
 It's good practice to ensure all your records have an @id property.  If there is no value then the 

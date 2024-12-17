@@ -37,7 +37,7 @@ from pyld import jsonld
 S3_BUCKET_NAME = "noaa-wod-pds"
 OUTPUT_FOLDER = "./output/" #must exist
 LOGFILE = OUTPUT_FOLDER + "wod-parsed.log" #will get created
-URL_BASEPATH_WHERE_JSONLD_FILES_WILL_LIVE_LATER = "https://raw.githubusercontent.com/your-repo/"
+URL_BASEPATH_WHERE_JSONLD_FILES_WILL_LIVE_LATER = "https://raw.githubusercontent.com/iodepo/odis-arch/master/collection/tempHosting/data-wod/"
 FILESIZE_THRESHOLD = 400000 #(in KB) if greater, then download file instead of processing in memory.  Default is 400 MB
 
 #log to a file
@@ -171,8 +171,9 @@ if __name__ == '__main__':
             miny = df["geospatial_lat_min"].values[0]
             maxx = df["geospatial_lon_max"].values[0]
             maxy = df["geospatial_lat_max"].values[0]
-            
-            boxCoords = str("""{} {} {} {}""".format(minx, miny, maxx, maxy))
+           
+            #schema.org expects lat long (Y X) coordinate order
+            boxCoords = str("""{} {} {} {}""".format(miny, minx, maxy, maxx))
             print("    GeoShape:Box: " + boxCoords)
             spatialCov = {}
             spatialCov["@type"] = "https://schema.org/Place"
@@ -227,10 +228,10 @@ if __name__ == '__main__':
             print("    dateModified: " + dateModified)
             data["https://schema.org/dateModified"] = dateModified
 
-            #citation
-            citation = df["references"].values[0]
-            print("    citation: " + citation)
-            data["https://schema.org/citation"] = citation
+            #creditText
+            creditText = df["references"].values[0]
+            print("    creditText: " + creditText)
+            data["https://schema.org/creditText"] = creditText
 
             #author
             author = {}

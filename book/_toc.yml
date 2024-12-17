@@ -14,7 +14,7 @@ parts:
     numbered: False
     chapters:
       - file: gettingStarted.md
-        title: "Connecting to the OIH Network"
+        title: "Connecting to the ODIS Federation"
   - caption: Profiles
     numbered: False
     chapters:
@@ -67,6 +67,7 @@ parts:
     numbered: False
     chapters:
     - file: tooling/index
+    - file: tooling/ckan.md
   - caption: "Validation"
     numbered: False
     chapters:

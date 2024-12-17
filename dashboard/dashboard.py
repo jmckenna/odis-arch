@@ -37,28 +37,18 @@ odisArchGitSchemaDevPath = "/home/apps/odis-dashboard/odis-arch-git-schema-dev-D
 dashboardPath = "/home/apps/odis-dashboard"
 
 sparqlTimeout = 1
+orgParquetStatus = 0
+orgParquetUrl = ""
+orgParquetLastModified = ""
 
 odisParquetObjectsBase = "http://ossapi.oceaninfohub.org/public/assets/"
 #odisParquetObjectsBase = "/home/apps/odis-dashboard/dashboard/data/assets/"
 combinedParquet = odisParquetObjectsBase + "combined.parquet"
 
-### Setup minio
-
-def publicurls(client, bucket, prefix):
-    urls = []
-    objects = client.list_objects(bucket, prefix=prefix, recursive=True)
-    for obj in objects:
-        result = client.stat_object(bucket, obj.object_name)
-
-        if result.size > 0:  #  how to tell if an objet   obj.is_public  ?????
-            url = client.presigned_get_object(bucket, obj.object_name)
-            # print(f"Public URL for object: {url}")
-            urls.append(url)
-
-    return urls
-
-client = Minio("ossapi.oceaninfohub.org:80",  secure=False) # Create client with anonymous access.
-urls = publicurls(client, "public", "assets")
+# setup minio
+address = "ossapi.oceaninfohub.org:80"
+bucket = "public"
+prefix = "assets"
 
 # Instantiate the DuckDB connections
 duckdbConnCombined = duckdb.connect()
@@ -72,15 +62,18 @@ duckdbConnFilterByOrg = duckdb.connect()
 
 st.set_page_config(
     page_title="ODIS Dashboard",
-    page_icon="https://oceaninfohub.org/wp-content/uploads/2020/11/logo-only_OIH_EPS-CMYK-100x100.png",
+    page_icon="https://book.odis.org/_static/ODIS-logo-192x192.png",
     layout="wide",
     initial_sidebar_state="expanded", ###or "collapsed"
     menu_items={
          'Report a bug': "https://github.com/iodepo/odis-arch/issues",
-         'Get Help': 'https://oceaninfohub.org/contact-2/',         
+         'Get Help': 'https://oceaninfohub.org/contact/',         
          'About': "Dashboard demo by [jmckenna](https://github.com/jmckenna)"
     }   
 )
+
+#logo
+st.logo("https://book.odis.org/_static/ODIS-logo-192x192.png", link="https://odis.org/")
 
 # dashboard title
 st.title("ODIS Dashboard")
@@ -94,18 +87,18 @@ html(openhub_badge_html)
 with st.sidebar:
     st.header('Glossary')
     st.subheader('ODIS')
-    #st.markdown('The Ocean Data Information System (ODIS) is managed by the [Ocean InfoHub](https://oceaninfohub.org/) (OIH) and is based on a community-maintained Knowledge Graph, that leverages the [schema.org](https://schema.org) framework.  See the [ODIS book](https://book.oceaninfohub.org/) of documentation.')    
-    st.markdown('The Ocean Data Information System (ODIS) is a federation of systems that use common conventions to share and exchange their (meta)data. The foundation for ODIS was established by the [Ocean InfoHub](https://oceaninfohub.org/) (OIH) project. OIH harvests (meta)data from all ODIS nodes, and builds a collective Knowledge Graph to promote global discovery and action. See the [ODIS book](https://book.oceaninfohub.org/) of documentation for more details.')
+    #st.markdown('The Ocean Data Information System (ODIS) is managed by the [Ocean InfoHub](https://oceaninfohub.org/) (OIH) and is based on a community-maintained Knowledge Graph, that leverages the [schema.org](https://schema.org) framework.  See the [ODIS book](https://book.odis.org/) of documentation.')    
+    st.markdown('The Ocean Data Information System (ODIS) is a federation of systems that use common conventions to share and exchange their (meta)data. The foundation for ODIS was established by the [Ocean InfoHub](https://oceaninfohub.org/) (OIH) project. OIH harvests (meta)data from all ODIS nodes, and builds a collective Knowledge Graph to promote global discovery and action. See the [ODIS book](https://book.odis.org/) of documentation for more details.')
     st.subheader('Graph')
     st.markdown('Also known as Knowledge Graph, or KG, graphs are a structured way to harvest information on the Web, by representing entities (eg. people, places, objects) as nodes, and relationships between entities.  The connection between 2 nodes is defined by triples.')
     st.subheader('SPARQL Endpoint')
-    st.markdown('SPARQL (SPARQL Protocol and RDF Query Language) is the query language that is used to query graphs.  ODIS has a [SPARQL Endpoint](http://graph.oceaninfohub.org/blazegraph/namespace/oih/sparql) that allows you to directly query the ODIS graph. See the [ODIS book](https://book.oceaninfohub.org/users/sparql.html) for example queries.')
+    st.markdown('SPARQL (SPARQL Protocol and RDF Query Language) is the query language that is used to query graphs.  ODIS has a [SPARQL Endpoint](http://graph.oceaninfohub.org/blazegraph/namespace/oih/sparql) that allows you to directly query the ODIS graph. See the [ODIS book](https://book.odis.org/users/sparql.html) for example queries.')
     st.subheader('Node')
     st.markdown('The ODIS graph consists of many nodes, which represent organizations, each with their own catalogue of data.')
     st.subheader('Triple')
     st.markdown('The ODIS graph connects information through a triple; *Subject, Predicate, Object*.  In the information "Leonard Nimoy was an actor who played the character Spock", LeonardNimoy is the *Subject*, "played" is the *Predicate*, and "Spock" is the *Object*.')    
     st.subheader('Types')
-    st.markdown('The ODIS graph leverages core [thematic patterns](https://book.oceaninfohub.org/thematics/README.html), which are expanded from [schema.org](https://schema.org/docs/full.html) types.')    
+    st.markdown('The ODIS graph leverages core [thematic patterns](https://book.odis.org/thematics/index.html), which are expanded from [schema.org](https://schema.org/docs/full.html) types.')    
     st.subheader('ODIS Node')
     st.markdown('An ODIS Node (not to be confused with a graph "node", described above) is a data source that is networked into and part of the ODIS Federation. ODIS Nodes are operated by ODIS partner oganisations, which may have one or many Nodes.')
     
@@ -592,7 +585,7 @@ if graphStatus == 1:
         #node_filter = st.selectbox("Select an ODIS node", ("Marine Training EU", "AquaDocs", "Ocean Biodiversity Information System", "Ocean Best Practices", "OceanExpert UNESCO/IOC Project Office for IODE", "EDMO SeaDataNet", "EDMERP SeaDataNet", "INVEMAR documents", "INVEMAR Experts", "INVEMAR institution", "INVEMAR training", "INVEMAR vessel"))
         #node_filter = st.selectbox("Select an ODIS node", dfOrgs, index=8)
         #node_filter = st.selectbox("Select an ODIS node", dfOrgNames, index=2)
-        node_filter = st.selectbox("Select an ODIS node", dfJoined[['Node']], index=6)
+        node_filter = st.selectbox("Select an ODIS node", dfJoined[['Node']], index=7)
         
         # creating a single-element container
         placeholder = st.empty()
@@ -627,7 +620,7 @@ if graphStatus == 1:
                 sitemapDesc = dfRecord[["description"]].values[0].item()
                 sitemapType = dfRecord[["type"]].values[0].item()
                 if sitemapType == "sitemap":
-                    st.subheader(dfRecord[["count"]].values[0].item())
+                    st.subheader(int(dfRecord[["count"]].values[0].item()))
                     #st.subheader(sitemapDesc.split(':')[0].rstrip())
                     #output = [x for x in sitemapDesc.split() if x.startswith('http://') or x.startswith('https://')]
                     #st.subheader(output[0])
@@ -637,30 +630,52 @@ if graphStatus == 1:
              
             with nodeCol3:
                 st.write("Number of Entities Described in ODIS Graph")
-                orgParquet = odisParquetObjectsBase + shortName + ".parquet"
-                try:
-                    headers = {'User-Agent': 'Mozilla/5.0'}
-                    r = requests.get(orgParquet, headers=headers)
-                    r.raise_for_status()
-                except HTTPError:
-                    st.write(":x:" + " " + shortName + ".parquet is not available")
-                    orgParquetStatus = 0
-                else:
-                    #st.subheader(":white_check_mark:" + " Graph SPARQL Endpoint is up")        
-                    orgParquetStatus = 1
-        
-                    with st.spinner("Executing graph query..."):
-                        #duckdbConnFilterByOrg.execute("CREATE TABLE data AS SELECT row_number() OVER () AS idx, * FROM read_parquet('{}')".format(orgParquet))  # load from url                        
-                
-                        #dfOrgCount = duckdbConnFilterByOrg.execute("SELECT COUNT(*) AS count FROM data" ).fetchdf()
-                        #@st.cache_data(show_spinner="Executing graph query...", ttl=3600)
-                        #def queryOrgEntities():
-                            #return duckdbConnFilterByOrg.execute("SELECT COUNT(*) as count FROM read_parquet('" + orgParquet + "')").fetchdf()            
 
-                        dfOrgCount = duckdbConnFilterByOrg.execute("SELECT COUNT(*) AS count FROM read_parquet('" + orgParquet + "')" ).fetchdf()                   
-                        #dfOrgCount = queryOrgEntities()   
-                        st.subheader(dfOrgCount['count'].values[0])
-                        # st.subheader(dfProvFilter['count'].sum())
+                parquetFileName = shortName + ".parquet"
+                client = Minio(address, secure=False) # Create client with anonymous access.
+                for item in client.list_objects(bucket, prefix=prefix, recursive=True):
+                    if parquetFileName in item.object_name.lower() and "test" not in item.object_name.lower() and "old" not in item.object_name.lower():
+                        orgParquetStatus = 1
+                        orgParquetUrl = client.presigned_get_object(bucket, item.object_name)
+                        result = client.stat_object(bucket, item.object_name)
+                        orgParquetLastModified = result.last_modified.strftime('%Y-%m-%d')
+                        with st.spinner("Executing graph query..."):
+                            #duckdbConnFilterByOrg.execute("CREATE TABLE data AS SELECT row_number() OVER () AS idx, * FROM read_parquet('{}')".format(orgParquetUrl))  # load from url                        
+                    
+                            #dfOrgCount = duckdbConnFilterByOrg.execute("SELECT COUNT(*) AS count FROM data" ).fetchdf()
+                            #@st.cache_data(show_spinner="Executing graph query...", ttl=3600)
+                            #def queryOrgEntities():
+                                #return duckdbConnFilterByOrg.execute("SELECT COUNT(*) as count FROM read_parquet('" + orgParquetUrl + "')").fetchdf()            
+
+                            dfOrgCount = duckdbConnFilterByOrg.execute("SELECT COUNT(*) AS count FROM read_parquet('" + orgParquetUrl + "')" ).fetchdf()                   
+                            #dfOrgCount = queryOrgEntities()   
+                            st.subheader(dfOrgCount['count'].values[0])
+                            # st.subheader(dfProvFilter['count'].sum())         
+                
+                # orgParquet = odisParquetObjectsBase + shortName + ".parquet"
+                # try:
+                    # headers = {'User-Agent': 'Mozilla/5.0'}
+                    # r = requests.get(orgParquet, headers=headers)
+                    # r.raise_for_status()
+                # except HTTPError:
+                    # st.write(":x:" + " " + shortName + ".parquet is not available")
+                    # orgParquetStatus = 0
+                # else:
+                    # #st.subheader(":white_check_mark:" + " Graph SPARQL Endpoint is up")        
+                    # orgParquetStatus = 1
+        
+                    # with st.spinner("Executing graph query..."):
+                        # #duckdbConnFilterByOrg.execute("CREATE TABLE data AS SELECT row_number() OVER () AS idx, * FROM read_parquet('{}')".format(orgParquet))  # load from url                        
+                
+                        # #dfOrgCount = duckdbConnFilterByOrg.execute("SELECT COUNT(*) AS count FROM data" ).fetchdf()
+                        # #@st.cache_data(show_spinner="Executing graph query...", ttl=3600)
+                        # #def queryOrgEntities():
+                            # #return duckdbConnFilterByOrg.execute("SELECT COUNT(*) as count FROM read_parquet('" + orgParquet + "')").fetchdf()            
+
+                        # dfOrgCount = duckdbConnFilterByOrg.execute("SELECT COUNT(*) AS count FROM read_parquet('" + orgParquet + "')" ).fetchdf()                   
+                        # #dfOrgCount = queryOrgEntities()   
+                        # st.subheader(dfOrgCount['count'].values[0])
+                        # # st.subheader(dfProvFilter['count'].sum())
                 
             
             with nodeCol4:
@@ -755,11 +770,11 @@ if graphStatus == 1:
                         #dfTypeCount = duckdbConnCombined.execute("SELECT DISTINCT type, COUNT(*) AS count FROM data WHERE provder = '" + shortName + "' GROUP BY type order by count desc").fetchdf()                
                         #@st.cache_data(show_spinner="Executing graph query...", ttl=3600)
                         #def queryOrgTypes():
-                            #return duckdbConnFilterByOrg.execute("SELECT DISTINCT type, COUNT(*) as count FROM read_parquet('" + orgParquet + "') GROUP BY type order by count desc").fetchdf()            
+                            #return duckdbConnFilterByOrg.execute("SELECT DISTINCT type, COUNT(*) as count FROM read_parquet('" + orgParquetUrl + "') GROUP BY type order by count desc").fetchdf()            
                            
-                        dfOrgTypeExists = duckdbConnFilterByOrg.execute("SELECT COUNT(*) AS count FROM PARQUET_SCHEMA('" + orgParquet + "') WHERE name = 'type'").fetchdf()
+                        dfOrgTypeExists = duckdbConnFilterByOrg.execute("SELECT COUNT(*) AS count FROM PARQUET_SCHEMA('" + orgParquetUrl + "') WHERE name = 'type'").fetchdf()
                         if dfOrgTypeExists['count'].values[0] == 1:
-                            dfTypeCount = duckdbConnFilterByOrg.execute("SELECT DISTINCT type, COUNT(*) AS count FROM read_parquet('" + orgParquet + "') GROUP BY type order by count desc").fetchdf()                
+                            dfTypeCount = duckdbConnFilterByOrg.execute("SELECT DISTINCT type, COUNT(*) AS count FROM read_parquet('" + orgParquetUrl + "') GROUP BY type order by count desc").fetchdf()                
                             #dfTypeCount = queryOrgTypes()
                             st.write(dfTypeCount)
                         else:
@@ -804,10 +819,10 @@ if graphStatus == 1:
                         #dfKeywordsCount = duckdbConnCombined.execute("SELECT DISTINCT keywords, COUNT(*) AS count FROM data WHERE provder = 'cioos' GROUP BY keywords order by count desc").fetchdf()
                         #@st.cache_data(show_spinner="Executing graph query...", ttl=3600)
                         #def queryOrgKeywords():
-                            #return duckdbConnFilterByOrg.execute("SELECT DISTINCT keywords, COUNT(*) as count FROM read_parquet('" + orgParquet + "') GROUP BY keywords order by count desc").fetchdf()            
-                        dfOrgKeywordsExists = duckdbConnFilterByOrg.execute("SELECT COUNT(*) AS count FROM PARQUET_SCHEMA('" + orgParquet + "') WHERE name = 'keywords'").fetchdf()
+                            #return duckdbConnFilterByOrg.execute("SELECT DISTINCT keywords, COUNT(*) as count FROM read_parquet('" + orgParquetUrl + "') GROUP BY keywords order by count desc").fetchdf()            
+                        dfOrgKeywordsExists = duckdbConnFilterByOrg.execute("SELECT COUNT(*) AS count FROM PARQUET_SCHEMA('" + orgParquetUrl + "') WHERE name = 'keywords'").fetchdf()
                         if dfOrgKeywordsExists['count'].values[0] == 1:
-                            dfKeywordsCount = duckdbConnFilterByOrg.execute("SELECT DISTINCT keywords, COUNT(*) AS count FROM read_parquet('" + orgParquet + "') GROUP BY keywords order by count desc").fetchdf()
+                            dfKeywordsCount = duckdbConnFilterByOrg.execute("SELECT DISTINCT keywords, COUNT(*) AS count FROM read_parquet('" + orgParquetUrl + "') GROUP BY keywords order by count desc").fetchdf()
                             #dfKeywordsCount = queryOrgKeywords()
                             st.write(dfKeywordsCount)
                         else:
@@ -821,11 +836,11 @@ if graphStatus == 1:
                     with st.spinner("Executing graph query..."):
                         #@st.cache_data(show_spinner="Executing graph query...", ttl=3600)
                         #def queryOrgLicense():
-                            #return duckdbConnFilterByOrg.execute("SELECT DISTINCT license, COUNT(*) as count FROM read_parquet('" + orgParquet + "') GROUP BY license order by count desc").fetchdf()            
+                            #return duckdbConnFilterByOrg.execute("SELECT DISTINCT license, COUNT(*) as count FROM read_parquet('" + orgParquetUrl + "') GROUP BY license order by count desc").fetchdf()            
                          
-                        dfOrgLicenseExists = duckdbConnFilterByOrg.execute("SELECT COUNT(*) AS count FROM PARQUET_SCHEMA('" + orgParquet + "') WHERE name = 'license'").fetchdf()
+                        dfOrgLicenseExists = duckdbConnFilterByOrg.execute("SELECT COUNT(*) AS count FROM PARQUET_SCHEMA('" + orgParquetUrl + "') WHERE name = 'license'").fetchdf()
                         if dfOrgLicenseExists['count'].values[0] == 1:
-                            dfLicenseCount = duckdbConnFilterByOrg.execute("SELECT DISTINCT license, COUNT(*) AS count FROM read_parquet('" + orgParquet + "') GROUP BY license order by count desc").fetchdf()
+                            dfLicenseCount = duckdbConnFilterByOrg.execute("SELECT DISTINCT license, COUNT(*) AS count FROM read_parquet('" + orgParquetUrl + "') GROUP BY license order by count desc").fetchdf()
                             #dfLicenseCount = queryOrgLicense()
                             st.write(dfLicenseCount)
                         else:
@@ -839,7 +854,7 @@ if graphStatus == 1:
         duckdbConnFilterByOrg.close()
         
         if orgParquetStatus == 1:
-            st.write(":arrow_down:" + " download the associated Parquet file locally to query: " + orgParquet)
+            st.write(":arrow_down:" + " download the associated Parquet file locally to query: " + orgParquetUrl + " *(file last modified: " + orgParquetLastModified + ")*")
 
     with st.expander("About the Dashboard", expanded=False):
            
@@ -860,6 +875,6 @@ if graphStatus == 1:
              shows live queries related to 
              the ODIS Graph, including describing each node in the 
              network.  More information about how to connect to the
-             ODIS network can be found at [https://book.oceaninfohub.org/](https://book.oceaninfohub.org/)
+             ODIS network can be found at [https://book.odis.org/](https://book.odis.org/)
         """)
         st.image("https://oceaninfohub.org/wp-content/uploads/2020/12/logo_OIH_PNG-RGB-1.png", width=300)

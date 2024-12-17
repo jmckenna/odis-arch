@@ -17,9 +17,14 @@ execution:
 ## About
 
 For spatial geometry Ocean InfoHub guidance will be to use the OGC [GeoSPARQL](https://www.ogc.org/standards/geosparql)
-vocabulary to express geometry using Well Known Text (WKT).  The schema.org spatial types and propeties are not well 
+vocabulary to express geometry using Well Known Text (WKT).  The schema.org spatial types and properties are not well 
 defined and difficult at times to reliably translate to geometries for use in more Open Geospatial Consortium (OGC)
 environments.  
+
+```{note}
+schema.org expects a lat long (Y X) coordinate order, so be aware of that when
+you are defining your spatialCoverage, in the GeoShape polygon or box parameters.
+```
 
 ## Simple GeoSPARQL WKT
 
@@ -105,6 +110,15 @@ Schema.org spatial relations are guided by [DE-9IM](https://en.wikipedia.org/wik
 ```{literalinclude} ../../../odis-in/dataGraphs/thematics/spatial/graphs/sos.json
 :linenos:
 :emphasize-lines: 8-15
+```
+
+Using a bounding box for your spatialCoverage is recommended, as it is easy to query 
+& display downstream, such as:
+
+```{literalinclude} ../../../odis-in/dataGraphs/thematics/dataset/graphs/datasetTemplate-Box.json
+:linenos:
+:lines: 56-68
+:emphasize-lines: 4-6
 ```
 
 ```{code-cell}

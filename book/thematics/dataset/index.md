@@ -37,6 +37,27 @@ for more focused creative work examples.
 :linenos:
 ```
 
+```{tip}
+@id around line#6 should point to whatever resolves eventually to the JSON-LD - if you only
+have an external JSON-LD file (and not embedded into the html `<script>` tag)
+then the @id should point to the .json file itself. Otherwise, @id should point
+to the landing page of the record (HTML page), that embeds the JSON-LD.
+```
+
+```{note}
+schema.org expects a lat long (Y X) coordinate order, so be aware of that when
+you are defining your spatialCoverage, in the GeoShape polygon or box parameters.
+```
+
+Using a bounding box for your spatialCoverage is recommended, as it is easy to query 
+& display downstream, such as:
+
+```{literalinclude} ../../../odis-in/dataGraphs/thematics/dataset/graphs/datasetTemplate-Box.json
+:linenos:
+:lines: 56-68
+:emphasize-lines: 4-6
+```
+
 ## Demo area  please ignore
 
 This area is being used to test out a new repository structure where the data graphs, 

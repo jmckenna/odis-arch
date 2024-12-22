@@ -1,0 +1,716 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>The Ocean InfoHub Project &amp; ODIS &#8212; The Ocean InfoHub Project and ODIS</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <link rel="icon" href="_static/ODIS-logo-32x32.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Structured Data on the Web" href="content.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/ODIS-logo-192x192.png" class="logo__image only-light" alt="The Ocean InfoHub Project and ODIS - Home"/>
+    <img src="_static/ODIS-logo-192x192.png" class="logo__image only-dark pst-js-only" alt="The Ocean InfoHub Project and ODIS - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    The Ocean InfoHub Project & ODIS
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="content.html">Structured Data on the Web</a></li>
+<li class="toctree-l1"><a class="reference internal" href="personas/persona.html">Personas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publishing/publishing.html">Publisher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="foundation/foundation.html">JSON-LD Foundation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="gettingStarted.html">Connecting to the ODIS Federation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Profiles</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="thematics/index.html">Thematic Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thematics/expinst/index.html">Core 1: Experts and Institutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thematics/docs/index.html">Core 2a: Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thematics/dataset/index.html">Core 2b: Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thematics/docs/maps.html">Core 3: Spatial Maps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thematics/projects/index.html">Core 4: Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thematics/training/index.html">Core 5: Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thematics/vessels/index.html">Core 6: Vessels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thematics/spatial/index.html">Support 1: Spatial Geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thematics/services/index.html">Support 2: Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thematics/terms/list.html">Support 3: Keywords &amp; Defined Terms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thematics/languages/languages.html">Support 4: Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thematics/sdg/index.html">Support 5: Linking To Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thematics/identifier/id.html">Support 6: Identifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thematics/variables/index.html">Support 7: EOVs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thematics/license/index.html">Support 8: Licenses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thematics/depth/index.html">Support 9: Depth</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Aggregation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="indexing/index.html">Aggregator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="indexing/qstart.html">Indexing with Gleaner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="indexing/cliDocker/index.html">Gleaner CLI Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="indexing/indexingservices.html">Indexing Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="indexing/dataservices.html">Data Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="indexing/graphpub.html">Graph First Approach</a></li>
+<li class="toctree-l1"><a class="reference internal" href="indexing/prov/index.html">Indexing Activity Prov</a></li>
+<li class="toctree-l1"><a class="reference internal" href="indexing/alternatives.html">Alternatives</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tooling</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="tooling/index.html">Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tooling/ckan.html">Installing a CKAN Catalogue and connecting to ODIS</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Validation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="validation/index.html">Validation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Interfaces</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="users/index.html">Users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/query.html">SPARQL</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="users/sparql.html">OIH SPARQL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/apis.html">APIs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="appendix/index.html">Appendix</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/annoyances.html">Known Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/references.html">References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/registries.html">Registries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/vocabularies.html">Controlled Vocabularies</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/iodepo/odis-arch" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/iodepo/odis-arch/issues/new?title=Issue%20on%20page%20%2Findex.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The Ocean InfoHub Project & ODIS</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guidance-for-the-implementation-of-the-odis-architecture">Guidance for the implementation of the ODIS-architecture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-links-to-the-oih-github-repository">Key links to the OIH GitHub repository</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#authoring-thematic-patterns"><span class="xref myst">Authoring Thematic Patterns</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#publishing"><span class="xref myst">Publishing</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing"><span class="xref myst">Indexing</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interfaces-and-services"><span class="xref myst">Interfaces and Services</span></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p><img alt="splash" src="_images/splash.png" /></p>
+<section class="tex2jax_ignore mathjax_ignore" id="the-ocean-infohub-project-odis">
+<h1>The Ocean InfoHub Project &amp; ODIS<a class="headerlink" href="#the-ocean-infohub-project-odis" title="Link to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>The Ocean InfoHub aims to build a sustainable, interoperable, and inclusive digital
+ecosystem for all Ocean data centres. Existing and emerging data systems are linked,
+with the ultimate goal of coordinating action and capacity to improve access to Ocean
+data and knowledge.</p>
+<p>The following video provide brief high level context to the Ocean InfoHub project.</p>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=KrxeZrPg0u8"><img alt="Ocean Infohub YouTube video" src="https://img.youtube.com/vi/KrxeZrPg0u8/0.jpg" /></a></p>
+<p><em>(read the original <a class="reference download internal" download="" href="_downloads/6e5d22dfdd776eeb3da0775d1f48b693/IOC_OceanInfoHub_Proposal__summary.pdf"><span class="xref download myst">ODIS Proposal</span></a>)</em></p>
+<p>Organizations are increasingly exposing data and resources on the Web.   A popular
+approach to this is using web architecture to expose structured data on the web using
+the <a class="reference external" href="http://schema.org">schema.org</a> vocabulary.   Doing this makes resources discoverable by a range of
+organizations leveraging this architecture to build indexes.  These include major
+commercial indexes, large domain focused groups and community focused services.</p>
+<p>The Ocean Data and Information System (ODIS) will provide a <a class="reference external" href="http://schema.org">schema.org</a> based
+interoperability layer and supporting technology to allow existing and emerging ocean
+data and information systems, from any stakeholder, to interoperate with one another.
+This will enable and accelerate more effective development and dissemination of digital
+technology and sharing of ocean data, information, and knowledge. As such, ODIS will
+not be a new portal or centralized system, but will provide a collaborative solution to
+interlink distributed systems for common goals. Together with global project partners and
+partners in the three regions, a process of co-design will enable a number of global and
+regional nodes to test the proof of concept for the ODIS.</p>
+<p>The ODIS-architecture development is being supported by the Ocean InfoHub Project, and it
+has been tested initially on IOC and partner databases. However, the system and standards
+are open for any institution or initiative that is interested in accessing the global data
+ecosystem to adopt and implement.</p>
+</section>
+<section id="guidance-for-the-implementation-of-the-odis-architecture">
+<h2>Guidance for the implementation of the ODIS-architecture<a class="headerlink" href="#guidance-for-the-implementation-of-the-odis-architecture" title="Link to this heading">#</a></h2>
+<p>OIH is providing guidance on the various stages of such an
+architecture including authoring, publishing, indexing and interfaces.</p>
+<p>The basics of this approach can be described as:</p>
+<ul class="simple">
+<li><p>Providers publish HTML pages for a resource.  This may be a publication, course
+description, research instrument or other.   The core themes for OIH are described
+in the Authoring section below.</p></li>
+<li><p>A HTML page then has a small JSON based snippet added to the HTML.  This is
+described in the Including JSON-LD in your resource page in the Publishing
+resource below.</p></li>
+<li><p>If you wish a resource to be included in the OIH index, then you need to
+include it in a sitemap file.  This is a small XML document that lists links
+to the resources you wish to be part of the index.  This approach is shown in
+the sitemap.xml section of the Publishing resource.</p></li>
+<li><p>Once the above is done the publishing phase is over.  At this point, OIH or
+other groups can now access and index your resources.   OIH is using some
+existing software to index and generate the graph and expose a simple
+reference interface to them.  This software is open and available and others
+are free to implement the approach with other software.  Links to other
+software are at the repository.</p></li>
+<li><p>The OIH index/graph and a simple interface is current at a development site
+and in a later phase of OIH a production interface will be developed.</p></li>
+</ul>
+<p><img alt="image1" src="_images/intro1.png" /></p>
+<p>Additionally, software to aid in validating and checking the resources is under
+development and will be available at the repository.   This will aid providers
+in expressing the information needed to address interfaces and services of
+interest to the community.</p>
+<p>The result is a sustainable architecture to address discovery and access to
+various resources published by the community and a shared graph of these
+resources.  That shared graph can be used by all members to link and discover
+across groups.</p>
+</section>
+<section id="key-links-to-the-oih-github-repository">
+<h2>Key links to the OIH GitHub repository<a class="headerlink" href="#key-links-to-the-oih-github-repository" title="Link to this heading">#</a></h2>
+<p>Interested groups can review material addressing these stages at the OIH GitHub
+repository.  Links and descriptions of these stages are described below.</p>
+<section id="authoring-thematic-patterns">
+<h3><a class="reference internal" href="thematics/index.html"><span class="std std-doc">Authoring Thematic Patterns</span></a><a class="headerlink" href="#authoring-thematic-patterns" title="Link to this heading">#</a></h3>
+<p>The ODIS OIH is working across five major thematic areas; Experts and
+Institutions, Documents, Projects, Training, Vessels.   Examples of these
+thematic concepts are being hosted and developed with input from the community.
+Additionally, methods for validation and simple tooling for authoring and
+testing are hosted at this repository.  Alongside these five thematic topics
+guidance on connecting services and spatial context on resources.</p>
+</section>
+<section id="publishing">
+<h3><a class="reference internal" href="publishing/publishing.html"><span class="std std-doc">Publishing</span></a><a class="headerlink" href="#publishing" title="Link to this heading">#</a></h3>
+<p>Guidance on implementation the web architecture approach is also available.
+This includes approaches on leveraging robots.txt and sitemaps.xml file for
+expressing hosted resources to the net.</p>
+</section>
+<section id="indexing">
+<h3><a class="reference internal" href="indexing/index.html"><span class="std std-doc">Indexing</span></a><a class="headerlink" href="#indexing" title="Link to this heading">#</a></h3>
+<p>The architecture approach is open and standards based.  As such, many
+organizations will be able to leverage the authoring and publishing approaches
+above to index a providers resources.  OIH will be providing reference
+implementations of software that can generate the index.</p>
+</section>
+<section id="interfaces-and-services">
+<h3><a class="reference internal" href="users/index.html"><span class="std std-doc">Interfaces and Services</span></a><a class="headerlink" href="#interfaces-and-services" title="Link to this heading">#</a></h3>
+<p>During the development of the OIH a basic reference implementation for an
+interface has been generated.  This is a development site meant to test and
+exercise the above elements.   It serves to demonstrate how others could also
+implement this approach and how future interfaces could be developed.</p>
+<p>An example of the value of implementing a lightweight can be seen with the
+Government of Canada:</p>
+<ul class="simple">
+<li><p>The Federal Geospatial Platform is a intra-governmental data catalogue
+implementing the Harmonized North American Profile of ISO 19115 (HNAP), with
+content exposed externally via OGC CSW (Catalogue Services Web).</p></li>
+<li><p>This content is harvested by the public facing Open Maps platform, which
+includes a catalogue component that is fed in part by the Federal Geospatial
+Platform. DCAT-based metadata is derived from the original ISO 19115 based
+metadata. As this markup is recognized by web crawlers such as those hosted by
+Google, content is harvested and is subsequently visible through Google
+Dataset Search. Furthermore, the cited publication for the data is also link
+via a complementary link to Google Scholar.</p></li>
+</ul>
+<p><img alt="image1" src="_images/intro2.png" /></p>
+</section>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="content.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Structured Data on the Web</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guidance-for-the-implementation-of-the-odis-architecture">Guidance for the implementation of the ODIS-architecture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-links-to-the-oih-github-repository">Key links to the OIH GitHub repository</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#authoring-thematic-patterns"><span class="xref myst">Authoring Thematic Patterns</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#publishing"><span class="xref myst">Publishing</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing"><span class="xref myst">Indexing</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interfaces-and-services"><span class="xref myst">Interfaces and Services</span></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Ocean InfoHub Project
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

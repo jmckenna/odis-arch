@@ -1,0 +1,1514 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Installing a CKAN Catalogue and connecting to ODIS &#8212; The Ocean InfoHub Project and ODIS</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tooling/ckan';</script>
+    <link rel="icon" href="../_static/ODIS-logo-32x32.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Validation" href="../validation/index.html" />
+    <link rel="prev" title="Tooling" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/ODIS-logo-192x192.png" class="logo__image only-light" alt="The Ocean InfoHub Project and ODIS - Home"/>
+    <img src="../_static/ODIS-logo-192x192.png" class="logo__image only-dark pst-js-only" alt="The Ocean InfoHub Project and ODIS - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    The Ocean InfoHub Project & ODIS
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../content.html">Structured Data on the Web</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../personas/persona.html">Personas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publishing/publishing.html">Publisher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../foundation/foundation.html">JSON-LD Foundation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../gettingStarted.html">Connecting to the ODIS Federation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Profiles</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../thematics/index.html">Thematic Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thematics/expinst/index.html">Core 1: Experts and Institutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thematics/docs/index.html">Core 2a: Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thematics/dataset/index.html">Core 2b: Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thematics/docs/maps.html">Core 3: Spatial Maps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thematics/projects/index.html">Core 4: Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thematics/training/index.html">Core 5: Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thematics/vessels/index.html">Core 6: Vessels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thematics/spatial/index.html">Support 1: Spatial Geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thematics/services/index.html">Support 2: Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thematics/terms/list.html">Support 3: Keywords &amp; Defined Terms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thematics/languages/languages.html">Support 4: Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thematics/sdg/index.html">Support 5: Linking To Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thematics/identifier/id.html">Support 6: Identifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thematics/variables/index.html">Support 7: EOVs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thematics/license/index.html">Support 8: Licenses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../thematics/depth/index.html">Support 9: Depth</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Aggregation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../indexing/index.html">Aggregator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indexing/qstart.html">Indexing with Gleaner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indexing/cliDocker/index.html">Gleaner CLI Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indexing/indexingservices.html">Indexing Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indexing/dataservices.html">Data Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indexing/graphpub.html">Graph First Approach</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indexing/prov/index.html">Indexing Activity Prov</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indexing/alternatives.html">Alternatives</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tooling</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Tooling</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Installing a CKAN Catalogue and connecting to ODIS</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Validation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../validation/index.html">Validation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Interfaces</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../users/index.html">Users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../users/query.html">SPARQL</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../users/sparql.html">OIH SPARQL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../users/apis.html">APIs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/index.html">Appendix</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/annoyances.html">Known Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/references.html">References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/registries.html">Registries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/vocabularies.html">Controlled Vocabularies</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/iodepo/odis-arch" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/iodepo/odis-arch/issues/new?title=Issue%20on%20page%20%2Ftooling/ckan.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tooling/ckan.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Installing a CKAN Catalogue and connecting to ODIS</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intended-audience">Intended Audience</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#windows-versions-supported">Windows Versions Supported</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-1-install-ckan-through-docker-recommended">Option 1: Install CKAN through Docker (recommended)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-wsl">Install WSL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-docker-engine">Install Docker Engine</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clone-the-ckan-docker-repository-locally">Clone the ckan-docker repository locally</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-build-and-run-ckan-plus-dependencies">Install (build and run) CKAN plus dependencies</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#goto-ckan-s-landing-page">Goto CKAN’s landing page</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-portainer-recommended-to-manage-containers">Install Portainer (Recommended) to manage containers</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-portainer-server">Setup Portainer Server</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#login-to-the-portainer-server">Login to the Portainer Server</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#manage-your-containers-with-portainer">Manage your containers with Portainer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-2-install-ckan-dependencies-manually">Option 2: Install CKAN &amp; dependencies manually</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-postgresql">Install PostgreSQL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-python">Install Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-git">Install Git</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-working-directory">Create a working directory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-virtual-environment-in-python">Create virtual environment in Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#upgrade-pip">Upgrade pip</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checkout-the-ckan-source-code-and-build-ckan">Checkout the CKAN source code and build CKAN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-postgresql-utils-to-path">Add PostgreSQL utils to PATH</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-ckan-database">Create the ckan database</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-the-postgis-extension-in-ckandb">Install the PostGIS extension in ckandb</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-config-file-for-ckan">Generate config file for CKAN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-java-jre">Install Java JRE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-strawberry-perl">Install Strawberry Perl</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-solr">Install Solr</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-redis">Install Redis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-ckan-database-tables">Create the CKAN database tables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-ckan-user">Add CKAN user</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-ckan">Run CKAN</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="installing-a-ckan-catalogue-and-connecting-to-odis">
+<h1>Installing a CKAN Catalogue and connecting to ODIS<a class="headerlink" href="#installing-a-ckan-catalogue-and-connecting-to-odis" title="Link to this heading">#</a></h1>
+<p><img alt="CKAN logo" src="../_images/ckan-logo.png" /></p>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
+<p>The following document explains how to set up a full metadata catalogue software
+architecture, with settings enabled to connect the catalogue to ODIS.</p>
+<p>The initial steps are for <a class="reference external" href="https://ckan.org/">CKAN</a>, and specifically on
+Windows.  You will have a choice to install CKAN through <a class="reference external" href="https://www.docker.com/">Docker</a>,
+which is recommended, or to install CKAN (and its dependencies) manually,
+which is much more difficult.</p>
+</section>
+<section id="intended-audience">
+<h2>Intended Audience<a class="headerlink" href="#intended-audience" title="Link to this heading">#</a></h2>
+<p>The intended audience of these steps is for a technical person to follow, as
+the steps require familiarity with running commands at the commandline, and
+executing various scripts.</p>
+</section>
+<section id="windows-versions-supported">
+<h2>Windows Versions Supported<a class="headerlink" href="#windows-versions-supported" title="Link to this heading">#</a></h2>
+<p>The following steps were created on Windows Server 2022, but should work on
+Windows 11 or 10.  You will be required to have full Administrator access on
+your server.</p>
+</section>
+<section id="option-1-install-ckan-through-docker-recommended">
+<h2>Option 1: Install CKAN through Docker (recommended)<a class="headerlink" href="#option-1-install-ckan-through-docker-recommended" title="Link to this heading">#</a></h2>
+<p>We will follow the <a class="reference external" href="https://github.com/ckan/ckan-docker/blob/master/README.md">Docker Compose steps for CKAN</a>.</p>
+<section id="install-wsl">
+<h3>Install WSL<a class="headerlink" href="#install-wsl" title="Link to this heading">#</a></h3>
+<p>To install Docker, we must install the WSL (Windows Subsystem for Linux),
+as follows:</p>
+<ul>
+<li><p>follow <a class="reference external" href="https://learn.microsoft.com/en-us/windows/wsl/install">https://learn.microsoft.com/en-us/windows/wsl/install</a></p></li>
+<li><p>open CMD window and execute:</p>
+<ul>
+<li><p>set the version of WSL to 2</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wsl</span> <span class="o">--</span><span class="nb">set</span><span class="o">-</span><span class="n">default</span><span class="o">-</span><span class="n">version</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</li>
+<li><p>see list of all Linux distribution names</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wsl</span> <span class="o">--</span><span class="nb">list</span> <span class="o">--</span><span class="n">online</span>
+</pre></div>
+</div>
+</li>
+<li><p>now install Ubuntu</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wsl</span> <span class="o">--</span><span class="n">install</span> <span class="o">--</span><span class="n">distribution</span> <span class="s2">&quot;Ubuntu-24.04&quot;</span>
+</pre></div>
+</div>
+<p><img alt="wsl install1" src="../_images/wsl-install1.png" /></p>
+</li>
+</ul>
+</li>
+<li><p>reboot machine</p></li>
+<li><p>you should see a progress bar for installing Ubuntu</p></li>
+<li><p>when asked to create a new user, enter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">username</span><span class="p">:</span> <span class="n">odis</span>
+  <span class="n">password</span><span class="p">:</span> <span class="n">yourpassword</span>
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>The WSL user has a lot of power (they have sudo/super-user permissions);
+it is strongly recommended that users change <code class="docutils literal notranslate"><span class="pre">yourpassword</span></code> to a secure
+and unique password for this account and keep hold of it in a password
+manager. That way if someone manages to hack CKAN and gain remote code
+execution capabilities, it won’t be so easy for them to gain super-user
+control.</p>
+</div>
+</li>
+<li><p>to run: goto Start menu, choose “WSL”</p>
+<ul class="simple">
+<li><p>CMD window should open with an <code class="docutils literal notranslate"><span class="pre">odis&#64;</span></code> prompt</p></li>
+</ul>
+</li>
+<li><p>to check the Ubuntu version, execute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lsb_release</span> <span class="o">-</span><span class="n">a</span>
+</pre></div>
+</div>
+<p>which should return:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">Distributor</span> <span class="n">ID</span><span class="p">:</span> <span class="n">Ubuntu</span>
+    <span class="n">Description</span><span class="p">:</span>    <span class="n">Ubuntu</span> <span class="mf">24.04</span> <span class="n">LTS</span>
+    <span class="n">Release</span><span class="p">:</span>        <span class="mf">24.04</span>
+    <span class="n">Codename</span><span class="p">:</span>       <span class="n">noble</span>
+</pre></div>
+</div>
+<p><img alt="wsl install2" src="../_images/wsl-install2.png" /></p>
+</li>
+</ul>
+</section>
+<section id="install-docker-engine">
+<h3>Install Docker Engine<a class="headerlink" href="#install-docker-engine" title="Link to this heading">#</a></h3>
+<p>We will follow the steps <a class="reference external" href="https://docs.docker.com/engine/install/ubuntu/">Install Docker Engine on Ubuntu</a>.</p>
+<ul>
+<li><p>assuming you are still at the <code class="docutils literal notranslate"><span class="pre">odis&#64;</span></code> prompt, but if not:</p>
+<ul class="simple">
+<li><p>goto Start menu, choose “WSL”</p></li>
+<li><p>CMD window should open with an <code class="docutils literal notranslate"><span class="pre">odis&#64;</span></code> prompt</p></li>
+</ul>
+</li>
+<li><p>execute the following, to update your Ubuntu packages</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">upgrade</span>
+</pre></div>
+</div>
+</li>
+<li><p>execute the following, to remove conflicking packages</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+</pre></div>
+</div>
+</li>
+<li><p>execute the following, to setup Docker’s <code class="docutils literal notranslate"><span class="pre">apt</span></code> repository</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Add Docker&#39;s official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  &quot;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release &amp;&amp; echo &quot;$VERSION_CODENAME&quot;) stable&quot; | \
+  sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+sudo apt-get update
+</pre></div>
+</div>
+</li>
+<li><p>now install the Docker packages by executing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">docker</span><span class="o">-</span><span class="n">ce</span> <span class="n">docker</span><span class="o">-</span><span class="n">ce</span><span class="o">-</span><span class="n">cli</span> <span class="n">containerd</span><span class="o">.</span><span class="n">io</span> <span class="n">docker</span><span class="o">-</span><span class="n">buildx</span><span class="o">-</span><span class="n">plugin</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">-</span><span class="n">plugin</span>
+</pre></div>
+</div>
+<p>if successful, the response should contain the message <code class="docutils literal notranslate"><span class="pre">Hello</span> <span class="pre">from</span> <span class="pre">Docker!</span></code>.</p>
+<p><img alt="docker install1" src="../_images/docker-install1.png" /></p>
+<p>you can also try a <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">version</span></code> command</p>
+<p><img alt="docker install2" src="../_images/docker-install2.png" /></p>
+</li>
+</ul>
+</section>
+<section id="clone-the-ckan-docker-repository-locally">
+<h3>Clone the ckan-docker repository locally<a class="headerlink" href="#clone-the-ckan-docker-repository-locally" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>assuming you are still at the <code class="docutils literal notranslate"><span class="pre">odis&#64;</span></code> prompt, but if not:</p>
+<ul class="simple">
+<li><p>goto Start menu, choose “WSL”</p></li>
+<li><p>CMD window should open with an <code class="docutils literal notranslate"><span class="pre">odis&#64;</span></code> prompt</p></li>
+</ul>
+</li>
+<li><p>execute the following, to clone the <code class="docutils literal notranslate"><span class="pre">ckan-docker</span></code> repo locally</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">ckan</span><span class="o">/</span><span class="n">ckan</span><span class="o">-</span><span class="n">docker</span><span class="o">.</span><span class="n">git</span> <span class="n">ckan</span><span class="o">-</span><span class="n">docker</span><span class="o">-</span><span class="n">git</span><span class="o">-</span><span class="n">master</span>
+</pre></div>
+</div>
+<p><img alt="git install1" src="../_images/git-install1.png" /></p>
+</li>
+</ul>
+</section>
+<section id="install-build-and-run-ckan-plus-dependencies">
+<h3>Install (build and run) CKAN plus dependencies<a class="headerlink" href="#install-build-and-run-ckan-plus-dependencies" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>execute <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">ckan-docker-git-master</span></code></p></li>
+<li><p>make a copy the the <code class="docutils literal notranslate"><span class="pre">.env</span></code> file for our needs</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">example</span> <span class="o">.</span><span class="n">env</span>
+</pre></div>
+</div>
+</li>
+<li><p>you can optionally change the .env values for your needs, such as
+for the admin user/password</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#use vi to open the .env file</span>
+<span class="n">vi</span> <span class="o">.</span><span class="n">env</span>
+<span class="c1">#to make your changes, first press your &quot;i&quot; key (for INSERT mode), and</span>
+  <span class="c1">#then edit the desired lines</span>
+<span class="c1">#then save with the command</span>
+<span class="p">:</span><span class="n">wq</span>
+</pre></div>
+</div>
+<p><img alt="env install1" src="../_images/env-install1.png" /></p>
+</li>
+<li><p>build the Docker images</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">compose</span> <span class="n">build</span>
+</pre></div>
+</div>
+<p>you should see a response that states <code class="docutils literal notranslate"><span class="pre">Service</span> <span class="pre">ckan:</span> <span class="pre">Built</span></code></p>
+<p><img alt="build install1" src="../_images/build-install1.png" /></p>
+</li>
+<li><p>start the Docker containers</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">compose</span> <span class="n">up</span> <span class="o">-</span><span class="n">d</span>
+</pre></div>
+</div>
+<p>you should see a response that states that 6 containers are <code class="docutils literal notranslate"><span class="pre">Healthy</span></code></p>
+<p><img alt="compose install1" src="../_images/compose-install1.png" /></p>
+</li>
+<li><p>check status of containers by executing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">ps</span>
+</pre></div>
+</div>
+<p><img alt="compose install2" src="../_images/compose-install2.png" /></p>
+</li>
+</ul>
+</section>
+<section id="goto-ckan-s-landing-page">
+<h3>Goto CKAN’s landing page<a class="headerlink" href="#goto-ckan-s-landing-page" title="Link to this heading">#</a></h3>
+<p>Now you are ready to open your CKAN instance in your web browser.</p>
+<ul>
+<li><p>in FireFox or Chrome, goto: <a class="reference external" href="https://localhost:8443/">https://localhost:8443/</a></p>
+<p><img alt="ckan wsl install1" src="../_images/ckan-wsl-install1.png" /></p>
+</li>
+</ul>
+</section>
+<section id="install-portainer-recommended-to-manage-containers">
+<h3>Install Portainer (Recommended) to manage containers<a class="headerlink" href="#install-portainer-recommended-to-manage-containers" title="Link to this heading">#</a></h3>
+<p>Portainer offers a user-friendly interface to manage the CKAN containers.
+We will follow the <a class="reference external" href="https://docs.portainer.io/start/install-ce/server/docker/wsl">Portainer installation steps</a>
+for WSL.</p>
+<section id="setup-portainer-server">
+<h4>Setup Portainer Server<a class="headerlink" href="#setup-portainer-server" title="Link to this heading">#</a></h4>
+<ul>
+<li><p>assuming you are still at the <code class="docutils literal notranslate"><span class="pre">odis&#64;</span></code> prompt, but if not:</p>
+<ul class="simple">
+<li><p>goto Start menu, choose “WSL”</p></li>
+<li><p>CMD window should open with an <code class="docutils literal notranslate"><span class="pre">odis&#64;</span></code> prompt</p></li>
+</ul>
+</li>
+<li><p>execute the following, to create the volume that Portainer Server
+will use to store its database:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">volume</span> <span class="n">create</span> <span class="n">portainer_data</span>
+</pre></div>
+</div>
+</li>
+<li><p>then download and install the Portainer Server container:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">p</span> <span class="mi">8000</span><span class="p">:</span><span class="mi">8000</span> <span class="o">-</span><span class="n">p</span> <span class="mi">9443</span><span class="p">:</span><span class="mi">9443</span> <span class="o">--</span><span class="n">name</span> <span class="n">portainer</span> <span class="o">--</span><span class="n">restart</span><span class="o">=</span><span class="n">always</span> <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span> <span class="o">-</span><span class="n">v</span> <span class="n">portainer_data</span><span class="p">:</span><span class="o">/</span><span class="n">data</span> <span class="n">portainer</span><span class="o">/</span><span class="n">portainer</span><span class="o">-</span><span class="n">ce</span><span class="p">:</span><span class="mf">2.21.4</span>
+</pre></div>
+</div>
+</li>
+<li><p>Check that the Portainer Server container has started by executing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">ps</span>
+</pre></div>
+</div>
+<p><img alt="portainer install1" src="../_images/portainer-install1.png" /></p>
+<p>You should see a <code class="docutils literal notranslate"><span class="pre">portainer</span></code> line with the <code class="docutils literal notranslate"><span class="pre">Status</span></code> reporting <code class="docutils literal notranslate"><span class="pre">Up</span> <span class="pre">for</span> <span class="pre">xxx</span> <span class="pre">minutes</span></code></p>
+</li>
+</ul>
+</section>
+<section id="login-to-the-portainer-server">
+<h4>Login to the Portainer Server<a class="headerlink" href="#login-to-the-portainer-server" title="Link to this heading">#</a></h4>
+<ul>
+<li><p>you can now login using your web browser at <a class="reference external" href="https://localhost:9443">https://localhost:9443</a></p>
+<ul>
+<li><p>if you receive a message of <code class="docutils literal notranslate"><span class="pre">Your</span> <span class="pre">Portainer</span> <span class="pre">instance</span> <span class="pre">timed</span> <span class="pre">out</span> <span class="pre">for</span> <span class="pre">security</span> <span class="pre">purposes</span></code>,
+this occurs when you do not login within 5 minutes of performing the initial
+setup.  You can execute the following (which will give you another 5 minutes
+to complete the initial setup):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">stop</span> <span class="n">portainer</span>
+<span class="n">docker</span> <span class="n">start</span> <span class="n">portainer</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>you should now see a page where you can create a user.  Be sure to create a unique
+password and then click <code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">user</span></code>.  You may wish to disable the <code class="docutils literal notranslate"><span class="pre">Allow</span> <span class="pre">collection</span> <span class="pre">of</span> <span class="pre">anonymous</span> <span class="pre">statistics</span></code>.</p>
+<p><img alt="portainer install2" src="../_images/portainer-install2.png" /></p>
+</li>
+<li><p>you should now see a <code class="docutils literal notranslate"><span class="pre">Welcome</span> <span class="pre">to</span> <span class="pre">Portainer</span></code> page, and then you can click the <code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Started</span></code> button, to start using Portainer.</p>
+<p><img alt="portainer install3" src="../_images/portainer-install3.png" /></p>
+</li>
+</ul>
+</section>
+<section id="manage-your-containers-with-portainer">
+<h4>Manage your containers with Portainer<a class="headerlink" href="#manage-your-containers-with-portainer" title="Link to this heading">#</a></h4>
+<ul>
+<li><p>in the left panel, click on <code class="docutils literal notranslate"><span class="pre">Containers</span></code> to then see a list of your CKAN containers,
+and then interact with them if need be (stop/start/restart etc.).</p>
+<p><img alt="portainer install4" src="../_images/portainer-install4.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="option-2-install-ckan-dependencies-manually">
+<h2>Option 2: Install CKAN &amp; dependencies manually<a class="headerlink" href="#option-2-install-ckan-dependencies-manually" title="Link to this heading">#</a></h2>
+<section id="install-postgresql">
+<h3>Install PostgreSQL<a class="headerlink" href="#install-postgresql" title="Link to this heading">#</a></h3>
+<p>PostgreSQL is a popular Open Source database, that will store tables leveraged by
+CKAN.  It also has a very strong spatial engine, PostGIS.  We will now install both
+PostgreSQL and PostGIS, as follows:</p>
+<ul>
+<li><p>goto <a class="reference external" href="https://www.postgresql.org/download/windows/">https://www.postgresql.org/download/windows/</a></p></li>
+<li><p>near the top, click on “Download the installer certified by EDB”</p></li>
+<li><p>click the latest for “Windows x86-64”</p></li>
+<li><p>double-click the installer file</p></li>
+<li><p>leave default install directory as-is (C:/Program Files/PostgreSQL/17/)</p>
+<p><img alt="PG install1" src="../_images/pg-install1.png" /></p>
+</li>
+<li><p>leave default components as-is</p>
+<p><img alt="PG install2" src="../_images/pg-install2.png" /></p>
+</li>
+<li><p>leave data directory as-is (C:/Program Files/PostgreSQL/17/data/)</p></li>
+<li><p>for superuser password, use “postgres”
+<img alt="PG install3" src="../_images/pg-install3.png" /></p></li>
+<li><p>leave port as-s (5432)</p>
+<p><img alt="PG install4" src="../_images/pg-install4.png" /></p>
+</li>
+<li><p>leave locale as-is</p></li>
+<li><p>install</p></li>
+<li><p>make sure “Stack Builder” is selected and then click “Finish”</p>
+<p><img alt="PG install5" src="../_images/pg-install5.png" /></p>
+</li>
+<li><p>in the “Stack Builder” window, select your installation in the dropdown
+(“PostgreSQL 17 on port 5432”) and then click “Next”</p></li>
+<li><p>expand “Spatial Extensions” and click the checkbox for “PostGIS x.x Bundle for PostgreSQL”</p>
+<p><img alt="PG install6" src="../_images/pg-install6.png" /></p>
+</li>
+<li><p>leave download directory as-is, click “Next”</p></li>
+<li><p>wait for the PostGIS installer to download</p></li>
+<li><p>click “Next” to begin PostGIS install</p></li>
+<li><p>click “I Agree” to the PostGIS license</p></li>
+<li><p>leave components as-is</p></li>
+<li><p>leave destination folder as-is</p></li>
+<li><p>click “Finish” to end the installation</p>
+<p><img alt="PG install8" src="../_images/pg-install8.png" /></p>
+</li>
+</ul>
+</section>
+<section id="install-python">
+<h3>Install Python<a class="headerlink" href="#install-python" title="Link to this heading">#</a></h3>
+<p>CKAN 2.11 (the latest release as of writing this document) supports Python versions
+3.9 to 3.12. This document will explain how to install Python 3.12, as follows:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have an existing Python installation, you may attempt at using it, but
+leveraging a Python virtual environment (venv) is recommended, which is explained
+later in this document.</p>
+</div>
+<ul>
+<li><p>create a new folder “Python” at the root of your C:/ drive, so you have a path of
+<code class="docutils literal notranslate"><span class="pre">C:/Python</span></code></p></li>
+<li><p>download 3.12.7 “Windows installer (64-bit)” from <a class="reference external" href="https://www.python.org/downloads/windows/">https://www.python.org/downloads/windows/</a></p></li>
+<li><p>double-click the file “python-3.12.7-amd64.exe” to install</p></li>
+<li><p>choose “Customize installation” &amp; check the checkbox for “add python.exe to PATH”</p>
+<p><img alt="Python install1" src="../_images/python-install1.png" /></p>
+</li>
+<li><p>leave “Optional Features” as-is</p></li>
+<li><p>for “Advanced Options”, click on the “Browse” button, to select the install location,
+and choose the <code class="docutils literal notranslate"><span class="pre">C:/Python</span></code> folder</p>
+<p><img alt="Python install2" src="../_images/python-install2.png" /></p>
+</li>
+<li><p>click the “Install” button</p></li>
+<li><p>test with a CMD command</p>
+<ul>
+<li><p>in the Windows search bar, type “CMD” and press <enter> on your keyboard</p></li>
+<li><p>make sure you right-click on the icon and select “Run as Administrator”</p>
+<p><img alt="CMD as administrator" src="tooling/images/cmd-admin1.png" /></p>
+</li>
+<li><p>at the command prompt, type:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>--version
+</pre></div>
+</div>
+<p><img alt="Python install3" src="../_images/python-install3.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="install-git">
+<h3>Install Git<a class="headerlink" href="#install-git" title="Link to this heading">#</a></h3>
+<p>We will use git to “checkout” (which means to get locally) the latest changes in
+software that is required for CKAN (as often the released code contains errors, that
+are fixed in the software’s GitHub repository).  We will also be using git through
+the commandline.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>After installing, will use the commandline for git, but you will also see a “Git GUI”
+option in the Start Menu, that you may prefer for a more visual experience.  There
+are also other visual tools that you can install instead, such as
+<a class="reference external" href="https://github.com/apps/desktop">GitHub Desktop</a>.</p>
+</div>
+<ul>
+<li><p>goto <a class="reference external" href="https://git-scm.com/downloads/win">https://git-scm.com/downloads/win</a> and select “Click here to download” the
+64-bit version of Git for Windows</p></li>
+<li><p>run the installer</p></li>
+<li><p>select “Checkout as-is, commit as-is”</p>
+<p><img alt="Git install1" src="../_images/git-windows1.png" /></p>
+</li>
+<li><p>select “Use Windows’ default console window”</p>
+<p><img alt="Git install2" src="../_images/git-windows2.png" /></p>
+</li>
+<li><p>select “Fast-forward or merge” for ‘git pull’</p>
+<p><img alt="Git install3" src="../_images/git-windows3.png" /></p>
+</li>
+<li><p>default credential manager (no changes)</p>
+<p><img alt="Git install4" src="../_images/git-windows4.png" /></p>
+</li>
+<li><p>select “Enable file system caching”</p></li>
+<li><p>test by opening a CMD window and executing: git –version</p>
+<p><img alt="Git install6" src="../_images/git-windows6.png" /></p>
+</li>
+</ul>
+</section>
+<section id="create-a-working-directory">
+<h3>Create a working directory<a class="headerlink" href="#create-a-working-directory" title="Link to this heading">#</a></h3>
+<p>Using Windows File Explorer, create a new folder named “working” at the
+<code class="docutils literal notranslate"><span class="pre">C:/</span></code> drive root, so you have the existing path <code class="docutils literal notranslate"><span class="pre">C:/working</span></code></p>
+<p><img alt="File Explorer" src="../_images/working-folder.png" /></p>
+</section>
+<section id="create-virtual-environment-in-python">
+<h3>Create virtual environment in Python<a class="headerlink" href="#create-virtual-environment-in-python" title="Link to this heading">#</a></h3>
+<p>We will use a <code class="docutils literal notranslate"><span class="pre">venv</span></code> virtual environment in Python, to make sure that
+the installation does not conflict with others on your server.  Open
+a CMD window, and execute the following to create a new <code class="docutils literal notranslate"><span class="pre">ckan-venv</span></code> environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>C:<span class="se">\w</span>orking
+python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>ckan-venv
+C:<span class="se">\w</span>orking<span class="se">\c</span>kan-venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
+</pre></div>
+</div>
+<p>You should now see a prompt that looks like the following:</p>
+<p><img alt="venv" src="../_images/python-venv.png" /></p>
+<p>You can also execute <code class="docutils literal notranslate"><span class="pre">deactivate</span></code> to exit that <code class="docutils literal notranslate"><span class="pre">ckan-venv</span></code> virtual environment,
+and then execute <code class="docutils literal notranslate"><span class="pre">C:\working\ckan-venv\Scripts\activate</span></code> to reactivate.</p>
+</section>
+<section id="upgrade-pip">
+<h3>Upgrade pip<a class="headerlink" href="#upgrade-pip" title="Link to this heading">#</a></h3>
+<p>Open a CMD window, and make sure that your <code class="docutils literal notranslate"><span class="pre">ckan-venv</span></code> is activated, and then
+upgrade pip as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+</pre></div>
+</div>
+</section>
+<section id="checkout-the-ckan-source-code-and-build-ckan">
+<h3>Checkout the CKAN source code and build CKAN<a class="headerlink" href="#checkout-the-ckan-source-code-and-build-ckan" title="Link to this heading">#</a></h3>
+<p>We will use git to get the latest source code direct from the CKAN
+repository on GitHub, and then build CKAN inside the <code class="docutils literal notranslate"><span class="pre">ckan-venv</span></code> virtual
+environment.  Open a CMD window, and execute:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>C:<span class="se">\w</span>orking
+C:<span class="se">\w</span>orking<span class="se">\c</span>kan-venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ckan/ckan.git<span class="w"> </span>ckan-git-master
+<span class="nb">cd</span><span class="w"> </span>ckan-git-master
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>python-magic-bin
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+<p><img alt="CKAN install1" src="../_images/ckan-install1.png" /></p>
+<p>You can now try to a test, to see the usage, such as:</p>
+<p><img alt="CKAN install2" src="../_images/ckan-install2.png" /></p>
+</section>
+<section id="add-postgresql-utils-to-path">
+<h3>Add PostgreSQL utils to PATH<a class="headerlink" href="#add-postgresql-utils-to-path" title="Link to this heading">#</a></h3>
+<p>We will need to run various PostgreSQL tools from the commandline, so we need
+to make sure that they are found on the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> environment variable on your
+server.  To set the system PATH, execute the following:</p>
+<ul>
+<li><p>in the Windows search bar, searcg for “env” and choose “Edit the system environment variables”</p></li>
+<li><p>click on the bottom “Environment variables” button</p>
+<p><img alt="PG env1" src="../_images/pg-env1.png" /></p>
+</li>
+<li><p>select <code class="docutils literal notranslate"><span class="pre">Path</span></code> in the lower “System variables” section and click the “Edit…”
+button</p>
+<p><img alt="PG env2" src="../_images/pg-env2.png" /></p>
+</li>
+<li><p>click “New” and then “Browse” to C:/Program Files/PostgreSQL/xx/bin/”</p>
+<p><img alt="PG env3" src="../_images/pg-env3.png" /></p>
+</li>
+<li><p>click “OK”</p></li>
+<li><p>close your CMD window, and re-open it</p></li>
+<li><p>test by executing: <code class="docutils literal notranslate"><span class="pre">psql</span> <span class="pre">--version</span></code></p>
+<p><img alt="PG env4" src="../_images/pg-env4.png" /></p>
+</li>
+</ul>
+</section>
+<section id="create-the-ckan-database">
+<h3>Create the ckan database<a class="headerlink" href="#create-the-ckan-database" title="Link to this heading">#</a></h3>
+<p>We will now create a user profile in <code class="docutils literal notranslate"><span class="pre">ckanuser</span></code> PostgreSQL.  Open a CMD window
+and execute:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>createuser<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-p<span class="w"> </span><span class="m">5432</span><span class="w"> </span>-s<span class="w"> </span>-D<span class="w"> </span>-r<span class="w"> </span>-P<span class="w"> </span>ckanuser
+</pre></div>
+</div>
+<p>then enter the following responses:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>enter<span class="w"> </span>password<span class="w"> </span><span class="k">for</span><span class="w"> </span>new<span class="w"> </span>role:<span class="w"> </span>odis
+enter<span class="w"> </span>it<span class="w"> </span>again:<span class="w"> </span>odis
+password:<span class="w"> </span>postgres
+</pre></div>
+</div>
+<p>We will now create a new database <code class="docutils literal notranslate"><span class="pre">ckandb</span></code> in PostgreSQL.  In your CMD window
+execute:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>createdb<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-p<span class="w"> </span><span class="m">5432</span><span class="w"> </span>-O<span class="w"> </span>ckanuser<span class="w"> </span>ckandb<span class="w"> </span>-E<span class="w"> </span>utf-8
+</pre></div>
+</div>
+<p>For the password enter <code class="docutils literal notranslate"><span class="pre">postgres</span></code></p>
+</section>
+<section id="install-the-postgis-extension-in-ckandb">
+<h3>Install the PostGIS extension in ckandb<a class="headerlink" href="#install-the-postgis-extension-in-ckandb" title="Link to this heading">#</a></h3>
+<p>You likely will need spatial tables inside the <code class="docutils literal notranslate"><span class="pre">ckandb</span></code> database, so it
+is recommended to enable the PostGIS extension, by executing in your
+CMD window as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>psql<span class="w"> </span>-U<span class="w"> </span>ckanuser<span class="w"> </span>-p<span class="w"> </span><span class="m">5432</span><span class="w"> </span>-d<span class="w"> </span>ckandb
+</pre></div>
+</div>
+<p>For the password enter <code class="docutils literal notranslate"><span class="pre">odis</span></code></p>
+<p>You should now be at a prompt like <code class="docutils literal notranslate"><span class="pre">ckandb=&gt;</span></code></p>
+<p>Then execute to list all tables: <code class="docutils literal notranslate"><span class="pre">\d</span> <span class="pre">&lt;enter&gt;</span></code>
+You should see a response as <code class="docutils literal notranslate"><span class="pre">Did</span> <span class="pre">not</span> <span class="pre">find</span> <span class="pre">any</span> <span class="pre">relations</span></code></p>
+<p>Next execute:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>CREATE<span class="w"> </span>EXTENSION<span class="w"> </span>postgis<span class="p">;</span><span class="w">  </span>&lt;enter&gt;
+CREATE<span class="w"> </span>EXTENSION<span class="w"> </span>postgis_topology<span class="p">;</span><span class="w">  </span>&lt;enter&gt;
+ALTER<span class="w"> </span>DATABASE<span class="w"> </span>ckandb<span class="w"> </span>SET<span class="w"> </span>client_min_messages<span class="w"> </span>TO<span class="w"> </span>WARNING<span class="p">;</span><span class="w">  </span>&lt;enter&gt;
+</pre></div>
+</div>
+<p>Again execute to list all tables (you should see more tables now) : <code class="docutils literal notranslate"><span class="pre">\d</span> <span class="pre">&lt;enter&gt;</span></code></p>
+<p><img alt="PG table install" src="../_images/postgis-table-install.png" /></p>
+<p>to quit, execute: <code class="docutils literal notranslate"><span class="pre">\q</span> <span class="pre">&lt;enter&gt;</span></code></p>
+</section>
+<section id="generate-config-file-for-ckan">
+<h3>Generate config file for CKAN<a class="headerlink" href="#generate-config-file-for-ckan" title="Link to this heading">#</a></h3>
+<p>We will run the built <code class="docutils literal notranslate"><span class="pre">ckan</span></code> tool to generate a config file for CKAN.  Open a
+CMD window and execute:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>C:<span class="se">\w</span>orking
+C:<span class="se">\w</span>orking<span class="se">\c</span>kan-venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
+mkdir<span class="w"> </span>ckan-site
+<span class="nb">cd</span><span class="w"> </span>ckan-site
+ckan<span class="w"> </span>generate<span class="w"> </span>config<span class="w"> </span>ckan.ini
+</pre></div>
+</div>
+<p>Now open in Notepad++: <code class="docutils literal notranslate"><span class="pre">C:\working\ckan-site\ckan.ini</span></code>
+and set the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">line</span><span class="c1"># 73:</span>
+    <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">postgresql</span><span class="p">:</span><span class="o">//</span><span class="n">ckanuser</span><span class="p">:</span><span class="n">odis</span><span class="nd">@localhost</span><span class="o">/</span><span class="n">ckandb</span>
+
+  <span class="n">line</span><span class="c1"># 78:</span>
+    <span class="n">ckan</span><span class="o">.</span><span class="n">site_url</span> <span class="o">=</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">5000</span>
+
+  <span class="n">line</span><span class="c1"># 139:</span>
+    <span class="n">ckan</span><span class="o">.</span><span class="n">site_id</span> <span class="o">=</span> <span class="n">default</span>
+    
+  <span class="n">line</span><span class="c1"># 195</span>
+    <span class="n">extra_template_paths</span> <span class="o">=</span> <span class="n">C</span><span class="p">:</span>\<span class="n">working</span>\<span class="n">ckan</span><span class="o">-</span><span class="n">git</span><span class="o">-</span><span class="n">master</span>\<span class="n">ckan</span>\<span class="n">templates</span>
+    
+  <span class="n">line</span><span class="c1"># 202:</span>
+    <span class="n">ckan</span><span class="o">.</span><span class="n">storage_path</span> <span class="o">=</span> <span class="n">C</span><span class="p">:</span>\<span class="n">working</span>\<span class="n">ckan</span><span class="o">-</span><span class="n">site</span>\<span class="n">data</span>  
+</pre></div>
+</div>
+<p>Using Windows File Explorer, then create a new <code class="docutils literal notranslate"><span class="pre">data</span></code> folder inside
+<code class="docutils literal notranslate"><span class="pre">C:\working\ckan-site</span></code></p>
+</section>
+<section id="install-java-jre">
+<h3>Install Java JRE<a class="headerlink" href="#install-java-jre" title="Link to this heading">#</a></h3>
+<p>Several tools for CKAN require that we install Java, as follows:</p>
+<ul class="simple">
+<li><p>download “Open JDK 21.x” from <a class="reference external" href="https://learn.microsoft.com/en-ca/java/openjdk/download">https://learn.microsoft.com/en-ca/java/openjdk/download</a></p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>JDK 21 is recommended for latest Solr through GitHub</p>
+</div>
+<ul>
+<li><p>use MSI installer for x64 platform</p></li>
+<li><p>run installer (use all defaults)</p></li>
+<li><p>test: open a new CMD window and execute: <code class="docutils literal notranslate"><span class="pre">java</span> <span class="pre">--version</span></code></p>
+<p><img alt="OpenJDK install1" src="../_images/openjdk-install1.png" /></p>
+</li>
+<li><p>check your system Environment Variables list to make sure JAVA_HOME is set</p>
+<ul>
+<li><p>set it to:
+<code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Microsoft\jdk-17.0.13.11-hotspot</span></code></p>
+<p><img alt="OpenJDK install2" src="../_images/openjdk-install2.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="install-strawberry-perl">
+<h3>Install Strawberry Perl<a class="headerlink" href="#install-strawberry-perl" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>download: <a class="reference external" href="https://strawberryperl.com/">https://strawberryperl.com/</a></p></li>
+<li><p>use MSI installer</p></li>
+<li><p>leave defaults as-is</p></li>
+<li><p>test in new CMD window, executing: <code class="docutils literal notranslate"><span class="pre">perl</span> <span class="pre">--version</span></code></p></li>
+</ul>
+</section>
+<section id="install-solr">
+<h3>Install Solr<a class="headerlink" href="#install-solr" title="Link to this heading">#</a></h3>
+<p>CKAN leverages Solr for its fast indexing/searches.  To install Solr
+execute the following in a CMD window:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>C:<span class="se">\w</span>orking
+C:<span class="se">\w</span>orking<span class="se">\c</span>kan-venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate<span class="w">  </span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/apache/solr.git<span class="w"> </span>solr-git-main
+<span class="nb">cd</span><span class="w"> </span>solr-git-main
+gradlew<span class="w"> </span>dev
+<span class="nb">cd</span><span class="w"> </span>C:<span class="se">\w</span>orking<span class="se">\s</span>olr-git-main<span class="se">\s</span>olr<span class="se">\p</span>ackaging<span class="se">\b</span>uild<span class="se">\d</span>ev
+</pre></div>
+</div>
+<p><img alt="Solr install1" src="../_images/solr-install1.png" /></p>
+<ul class="simple">
+<li><p>Test Solr by executing: <code class="docutils literal notranslate"><span class="pre">bin\solr.cmd</span> <span class="pre">--help</span></code></p></li>
+<li><p>Now we must start Solr in “standalone mode”</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>bin<span class="se">\s</span>olr.cmd<span class="w"> </span>start<span class="w"> </span>--user-managed<span class="w"> </span>-p<span class="w"> </span><span class="m">8983</span>
+</pre></div>
+</div>
+<p><img alt="Solr install2" src="../_images/solr-install2.png" /></p>
+<p>In your web browser goto: <a class="reference external" href="http://localhost:8983/solr">http://localhost:8983/solr</a></p>
+<p><img alt="Solr install3" src="../_images/solr-install3.png" /></p>
+<ul class="simple">
+<li><p>Now check Solr status with <code class="docutils literal notranslate"><span class="pre">bin\solr.cmd</span> <span class="pre">status</span></code></p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">Solr</span> <span class="n">process</span> <span class="mi">2360</span> <span class="n">running</span> <span class="n">on</span> <span class="n">port</span> <span class="mi">8983</span>
+        <span class="p">{</span>
+          <span class="s2">&quot;solr_home&quot;</span><span class="p">:</span><span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">working</span><span class="se">\\</span><span class="s2">solr-git-main</span><span class="se">\\</span><span class="s2">solr</span><span class="se">\\</span><span class="s2">packaging</span><span class="se">\\</span><span class="s2">build</span><span class="se">\\</span><span class="s2">dev</span><span class="se">\\</span><span class="s2">server</span><span class="se">\\</span><span class="s2">solr&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;version&quot;</span><span class="p">:</span><span class="s2">&quot;10.0.0-SNAPSHOT bc0c226c8fe9c475e5e723355f729fd39ceaf30f [snapshot build, details omitted]&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;startTime&quot;</span><span class="p">:</span><span class="s2">&quot;Sat Nov 09 16:01:17 AST 2024&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;uptime&quot;</span><span class="p">:</span><span class="s2">&quot;0 days, 0 hours, 13 minutes, 19 seconds&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;memory&quot;</span><span class="p">:</span><span class="s2">&quot;115.4 MB (%22.5) of 512 MB&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>now create a new <code class="docutils literal notranslate"><span class="pre">ckan</span></code> Solr core</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">bin</span>\<span class="n">solr</span><span class="o">.</span><span class="n">cmd</span> <span class="n">create</span> <span class="o">-</span><span class="n">c</span> <span class="n">ckan</span>
+</pre></div>
+</div>
+<p>which should return: <code class="docutils literal notranslate"><span class="pre">Created</span> <span class="pre">new</span> <span class="pre">core</span> <span class="pre">'ckan'</span></code></p>
+<ul class="simple">
+<li><p>now stop Solr</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">bin</span>\<span class="n">solr</span><span class="o">.</span><span class="n">cmd</span> <span class="n">stop</span> <span class="o">-</span><span class="n">p</span> <span class="mi">8983</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>copy schema.xml from <code class="docutils literal notranslate"><span class="pre">C:\working\ckan-git-master\ckan\config\solr</span></code>
+to <code class="docutils literal notranslate"><span class="pre">C:\working\solr-git-main\solr\packaging\build\dev\server\solr\ckan\conf</span></code></p></li>
+<li><p>delete the file <code class="docutils literal notranslate"><span class="pre">managed-schema.xml</span></code> in <code class="docutils literal notranslate"><span class="pre">C:\working\solr-git-main\solr\packaging\build\dev\server\solr\ckan\conf</span></code></p></li>
+<li><p>now start Solr</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">bin</span>\<span class="n">solr</span><span class="o">.</span><span class="n">cmd</span> <span class="n">start</span> <span class="o">--</span><span class="n">user</span><span class="o">-</span><span class="n">managed</span> <span class="o">-</span><span class="n">p</span> <span class="mi">8983</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>in your web browser, check the <code class="docutils literal notranslate"><span class="pre">ckan</span></code> core</p>
+<ul>
+<li><p><a class="reference external" href="http://localhost:8983/solr/#/ckan/core-overview">http://localhost:8983/solr/#/ckan/core-overview</a></p></li>
+</ul>
+</li>
+</ul>
+<p><img alt="Solr install4" src="../_images/solr-install4.png" /></p>
+<ul>
+<li><p>you can also check the status of the core at the commandline, by executing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">X</span> <span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8983</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">cores</span><span class="o">/</span><span class="n">ckan</span>
+</pre></div>
+</div>
+</li>
+<li><p>which should give a response such as:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;responseHeader&quot;</span><span class="p">:{</span>
+<span class="w">          </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;QTime&quot;</span><span class="p">:</span><span class="mi">4</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;initFailures&quot;</span><span class="p">:{</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;status&quot;</span><span class="p">:{</span>
+<span class="w">          </span><span class="nt">&quot;ckan&quot;</span><span class="p">:{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;ckan&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;instanceDir&quot;</span><span class="p">:</span><span class="s2">&quot;C:\\working\\solr-git-main\\solr\\packaging\\build\\dev\\server\\solr\\ckan&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;dataDir&quot;</span><span class="p">:</span><span class="s2">&quot;C:\\working\\solr-git-main\\solr\\packaging\\build\\dev\\server\\solr\\ckan\\data\\&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;config&quot;</span><span class="p">:</span><span class="s2">&quot;solrconfig.xml&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;schema&quot;</span><span class="p">:</span><span class="s2">&quot;managed-schema.xml&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;startTime&quot;</span><span class="p">:</span><span class="s2">&quot;2024-11-09T20:33:09.309Z&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;uptime&quot;</span><span class="p">:</span><span class="mi">253492</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;index&quot;</span><span class="p">:{</span>
+<span class="w">              </span><span class="nt">&quot;numDocs&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;maxDoc&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;deletedDocs&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;segmentCount&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;current&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;hasDeletions&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;directory&quot;</span><span class="p">:</span><span class="s2">&quot;org.apache.lucene.store.NRTCachingDirectory:NRTCachingDirectory(MMapDirectory@C:\\working\\solr-git-main\\solr\\packaging\\build\\dev\\server\\solr\\ckan\\data\\index lockFactory=org.apache.lucene.store.NativeFSLockFactory@17a1916f; maxCacheMB=48.0 maxMergeSizeMB=4.0)&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;segmentsFile&quot;</span><span class="p">:</span><span class="s2">&quot;segments_1&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;segmentsFileSizeInBytes&quot;</span><span class="p">:</span><span class="mi">69</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;userData&quot;</span><span class="p">:{</span><span class="w"> </span><span class="p">},</span>
+<span class="w">              </span><span class="nt">&quot;sizeInBytes&quot;</span><span class="p">:</span><span class="mi">69</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="s2">&quot;69 bytes&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="install-redis">
+<h3>Install Redis<a class="headerlink" href="#install-redis" title="Link to this heading">#</a></h3>
+<p>To install Redis (required for CKAN), we must install the WSL (Windows Subsystem for Linux),
+as follows:</p>
+<ul>
+<li><p>follow <a class="reference external" href="https://learn.microsoft.com/en-us/windows/wsl/install">https://learn.microsoft.com/en-us/windows/wsl/install</a></p></li>
+<li><p>open CMD window and execute:</p>
+<ul>
+<li><p>see list of all Linux distribution names</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wsl</span> <span class="o">--</span><span class="nb">list</span> <span class="o">--</span><span class="n">online</span>
+</pre></div>
+</div>
+</li>
+<li><p>now install Ubuntu</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wsl</span> <span class="o">--</span><span class="n">install</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">wsl2</span> <span class="o">--</span><span class="n">distribution</span> <span class="s2">&quot;Ubuntu-24.04 LTS&quot;</span>
+</pre></div>
+</div>
+<p><img alt="redis install1" src="../_images/redis-install1.png" /></p>
+</li>
+</ul>
+</li>
+<li><p>reboot machine</p></li>
+<li><p>you should see a progress bar for installing Ubuntu</p></li>
+<li><p>when asked to create a new user, enter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">username</span><span class="p">:</span> <span class="n">odis</span>
+<span class="n">password</span><span class="p">:</span> <span class="n">yourpassword</span>
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>The WSL user has a lot of power (they have sudo/super-user permissions);
+it is strongly recommended that users change <code class="docutils literal notranslate"><span class="pre">yourpassword</span></code> to a secure
+and unique password for this account and keep hold of it in a password
+manager. That way if someone manages to hack CKAN and gain remote code
+execution capabilities, it won’t be so easy for them to gain super-user
+control.</p>
+</div>
+</li>
+<li><p>to run: goto Start menu, choose “WSL”</p>
+<ul class="simple">
+<li><p>CMD window should open with an <code class="docutils literal notranslate"><span class="pre">odis&#64;</span></code> prompt</p></li>
+</ul>
+</li>
+<li><p>to check the Ubuntu version, execute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lsb_release</span> <span class="o">-</span><span class="n">a</span>
+</pre></div>
+</div>
+<p>which should return:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">Distributor</span> <span class="n">ID</span><span class="p">:</span> <span class="n">Ubuntu</span>
+    <span class="n">Description</span><span class="p">:</span>    <span class="n">Ubuntu</span> <span class="mf">24.04</span> <span class="n">LTS</span>
+    <span class="n">Release</span><span class="p">:</span>        <span class="mf">24.04</span>
+    <span class="n">Codename</span><span class="p">:</span>       <span class="n">noble</span>
+</pre></div>
+</div>
+<p><img alt="redis install2" src="../_images/redis-install2.png" /></p>
+</li>
+<li><p>install the redis package</p>
+<ul>
+<li><p>(follow steps at <a class="reference external" href="https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/install-redis-on-windows/">https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/install-redis-on-windows/</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">fsSL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">redis</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">gpg</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">gpg</span> <span class="o">--</span><span class="n">dearmor</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">keyrings</span><span class="o">/</span><span class="n">redis</span><span class="o">-</span><span class="n">archive</span><span class="o">-</span><span class="n">keyring</span><span class="o">.</span><span class="n">gpg</span>
+<span class="n">echo</span> <span class="s2">&quot;deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main&quot;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">tee</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">redis</span><span class="o">.</span><span class="n">list</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">upgrade</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">redis</span>
+</pre></div>
+</div>
+</li>
+<li><p>if error “Failed to take /etc/passwd lock: Invalid argument”, execute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">mv</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">dpkg</span><span class="o">/</span><span class="n">info</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">dpkg</span><span class="o">/</span><span class="n">info_silent</span>
+<span class="n">sudo</span> <span class="n">mkdir</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">dpkg</span><span class="o">/</span><span class="n">info</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">f</span> <span class="n">install</span>
+<span class="n">sudo</span> <span class="n">mv</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">dpkg</span><span class="o">/</span><span class="n">info</span><span class="o">/*</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">dpkg</span><span class="o">/</span><span class="n">info_silent</span>
+<span class="n">sudo</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">dpkg</span><span class="o">/</span><span class="n">info</span>
+<span class="n">sudo</span> <span class="n">mv</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">dpkg</span><span class="o">/</span><span class="n">info_silent</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">dpkg</span><span class="o">/</span><span class="n">info</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">upgrade</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">redis</span>
+</pre></div>
+</div>
+</li>
+<li><p>start the redis server</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">redis</span><span class="o">-</span><span class="n">server</span> <span class="n">start</span>
+</pre></div>
+</div>
+</li>
+<li><p>test it by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">-</span><span class="n">cli</span>
+</pre></div>
+</div>
+<ul>
+<li><p>which should bring you to a prompt of <code class="docutils literal notranslate"><span class="pre">127.0.0.1:6379&gt;</span></code>, so then type
+<code class="docutils literal notranslate"><span class="pre">ping</span> <span class="pre">&lt;enter&gt;</span></code></p>
+<ul>
+<li><p>the response should be <code class="docutils literal notranslate"><span class="pre">PONG</span></code> if successful</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="mf">127.0.0.1</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span>
+  <span class="mf">127.0.0.1</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span><span class="n">ping</span>
+  <span class="n">PONG</span>
+</pre></div>
+</div>
+<p><img alt="redis install3" src="../_images/redis-install3.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="create-the-ckan-database-tables">
+<h3>Create the CKAN database tables<a class="headerlink" href="#create-the-ckan-database-tables" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>open new CMD window, and execute:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">working</span>\<span class="n">ckan</span><span class="o">-</span><span class="n">venv</span>\<span class="n">Scripts</span>\<span class="n">activate</span>
+<span class="n">cd</span> <span class="n">C</span><span class="p">:</span>\<span class="n">working</span>\<span class="n">ckan</span><span class="o">-</span><span class="n">site</span>
+<span class="n">ckan</span> <span class="o">-</span><span class="n">c</span> <span class="n">ckan</span><span class="o">.</span><span class="n">ini</span> <span class="n">db</span> <span class="n">init</span>
+</pre></div>
+</div>
+<ul>
+<li><p>you should see a green message: “Upgrading DB: SUCCESS”</p>
+<p><img alt="CKAN install tables1" src="../_images/ckan-install-tables1.png" /></p>
+</li>
+<li><p>test with psql command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">psql</span> <span class="o">-</span><span class="n">U</span> <span class="n">ckanuser</span> <span class="o">-</span><span class="n">p</span> <span class="mi">5432</span> <span class="o">-</span><span class="n">d</span> <span class="n">ckandb</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;\d&quot;</span>
+</pre></div>
+</div>
+<p>for password enter <code class="docutils literal notranslate"><span class="pre">odis</span></code></p>
+</li>
+<li><p>you should see 32 rows of tables</p>
+<p><img alt="CKAN install tables2" src="../_images/ckan-install-tables2.png" /></p>
+</li>
+</ul>
+</section>
+<section id="add-ckan-user">
+<h3>Add CKAN user<a class="headerlink" href="#add-ckan-user" title="Link to this heading">#</a></h3>
+<p>We will create an initial user <code class="docutils literal notranslate"><span class="pre">admin</span></code> for CKAN, with full
+<code class="docutils literal notranslate"><span class="pre">sysadmin</span></code> powers, to manage the catalogue.  Open a CMD window and
+execute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">C</span><span class="p">:</span><span class="o">/</span><span class="n">working</span><span class="o">/</span><span class="n">ckan</span><span class="o">-</span><span class="n">site</span>
+<span class="n">C</span><span class="p">:</span>\<span class="n">working</span>\<span class="n">ckan</span><span class="o">-</span><span class="n">venv</span>\<span class="n">Scripts</span>\<span class="n">activate</span>
+<span class="n">ckan</span> <span class="o">-</span><span class="n">c</span> <span class="n">ckan</span><span class="o">.</span><span class="n">ini</span> <span class="n">user</span> <span class="n">add</span> <span class="n">admin</span> <span class="n">email</span><span class="o">=</span><span class="n">info</span><span class="nd">@gatewaygeomatics</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+<p>for password enter <code class="docutils literal notranslate"><span class="pre">odisckan</span></code></p>
+<p><img alt="CKAN home" src="../_images/ckan-create-user.png" /></p>
+<ul>
+<li><p>then promote the “admin” user to sysadmin</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ckan</span> <span class="o">-</span><span class="n">c</span> <span class="n">C</span><span class="p">:</span><span class="o">/</span><span class="n">working</span><span class="o">/</span><span class="n">ckan</span><span class="o">-</span><span class="n">site</span><span class="o">/</span><span class="n">ckan</span><span class="o">.</span><span class="n">ini</span> <span class="n">sysadmin</span> <span class="n">add</span> <span class="n">admin</span>
+</pre></div>
+</div>
+</li>
+<li><p>you should see a message of “Added admin as sysadmin”</p></li>
+</ul>
+</section>
+<section id="run-ckan">
+<h3>Run CKAN<a class="headerlink" href="#run-ckan" title="Link to this heading">#</a></h3>
+<p>We can use the internal “development server” to serve CKAN, as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">working</span>\<span class="n">ckan</span><span class="o">-</span><span class="n">venv</span>\<span class="n">Scripts</span>\<span class="n">activate</span>
+<span class="n">ckan</span> <span class="o">-</span><span class="n">c</span> <span class="n">C</span><span class="p">:</span><span class="o">/</span><span class="n">working</span><span class="o">/</span><span class="n">ckan</span><span class="o">-</span><span class="n">site</span><span class="o">/</span><span class="n">ckan</span><span class="o">.</span><span class="n">ini</span> <span class="n">run</span>
+</pre></div>
+</div>
+<ul>
+<li><p>should see:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="mi">2024</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">10</span> <span class="mi">12</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="mi">815</span> <span class="n">INFO</span>  <span class="p">[</span><span class="n">ckan</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">server</span><span class="p">]</span> <span class="n">Running</span> <span class="n">CKAN</span> <span class="n">on</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">5000</span>
+  <span class="mi">2024</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">10</span> <span class="mi">12</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span><span class="mi">107</span> <span class="n">INFO</span>  <span class="p">[</span><span class="n">ckan</span><span class="o">.</span><span class="n">cli</span><span class="p">]</span> <span class="n">Using</span> <span class="n">configuration</span> <span class="n">file</span> <span class="n">C</span><span class="p">:</span>\<span class="n">working</span>\<span class="n">ckan</span><span class="o">-</span><span class="n">site</span>\<span class="n">ckan</span><span class="o">.</span><span class="n">ini</span>
+</pre></div>
+</div>
+</li>
+<li><p>in your browser, goto: <a class="reference external" href="http://localhost:5000/">http://localhost:5000/</a></p></li>
+</ul>
+<p><img alt="CKAN home" src="../_images/ckan-initial-home.png" /></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./tooling"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tooling</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../validation/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Validation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intended-audience">Intended Audience</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#windows-versions-supported">Windows Versions Supported</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-1-install-ckan-through-docker-recommended">Option 1: Install CKAN through Docker (recommended)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-wsl">Install WSL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-docker-engine">Install Docker Engine</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clone-the-ckan-docker-repository-locally">Clone the ckan-docker repository locally</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-build-and-run-ckan-plus-dependencies">Install (build and run) CKAN plus dependencies</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#goto-ckan-s-landing-page">Goto CKAN’s landing page</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-portainer-recommended-to-manage-containers">Install Portainer (Recommended) to manage containers</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-portainer-server">Setup Portainer Server</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#login-to-the-portainer-server">Login to the Portainer Server</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#manage-your-containers-with-portainer">Manage your containers with Portainer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-2-install-ckan-dependencies-manually">Option 2: Install CKAN &amp; dependencies manually</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-postgresql">Install PostgreSQL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-python">Install Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-git">Install Git</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-working-directory">Create a working directory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-virtual-environment-in-python">Create virtual environment in Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#upgrade-pip">Upgrade pip</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checkout-the-ckan-source-code-and-build-ckan">Checkout the CKAN source code and build CKAN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-postgresql-utils-to-path">Add PostgreSQL utils to PATH</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-ckan-database">Create the ckan database</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-the-postgis-extension-in-ckandb">Install the PostGIS extension in ckandb</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-config-file-for-ckan">Generate config file for CKAN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-java-jre">Install Java JRE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-strawberry-perl">Install Strawberry Perl</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-solr">Install Solr</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-redis">Install Redis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-ckan-database-tables">Create the CKAN database tables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-ckan-user">Add CKAN user</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-ckan">Run CKAN</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Ocean InfoHub Project
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

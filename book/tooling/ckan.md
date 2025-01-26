@@ -158,7 +158,7 @@ We will follow the steps [Install Docker Engine on Ubuntu](https://docs.docker.c
   
 - build the Docker images
   ```
-  docker compose build
+  docker compose -f docker-compose.yml build
   ```
   you should see a response that states `Service ckan: Built`
   
@@ -244,6 +244,469 @@ for WSL.
   and then interact with them if need be (stop/start/restart etc.).
   
   ![portainer install4](./images/portainer-install4.png)
+  
+### Install DCAT extension for JSON-LD Support
+
+We will follow the Docker compose [README](https://github.com/ckan/ckan-docker/blob/master/README.md) for CKAN, 
+as well as the [ckanext-dcat](https://extensions.ckan.org/extension/dcat/#structured-data-and-google-dataset-search-indexing) 
+extension notes.
+
+#### Edit the Dockerfile to install the ckanext-dcat extension
+
+- assuming you are still at the `odis@` prompt, but if not:
+  - goto Start menu, choose "WSL"
+  - CMD window should open with an `odis@` prompt
+- execute `cd ckan-docker-git-master`
+- now use `vi` to add in the required section for the ckanext-dcat plugin into
+  the `Dockerfile` :
+  ```
+  #use vi to open the Dockerfile
+  vi ckan/Dockerfile
+  #to make your changes, first press your "i" key (for INSERT mode), and
+    #then edit the desired lines
+  #then save with the command
+  :wq
+  ```
+- around line#6, paste the following into the `Dockerfile`:
+  ```
+  ### prevent permissions errors when installing ckanext-dcat extension
+  USER root
+
+  ### DCAT ###
+  RUN  pip3 install -e 'git+https://github.com/ckan/ckanext-dcat.git@v2.1.0#egg=ckanext-dcat'  && \
+       pip3 install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v2.1.0/requirements.txt
+  ```
+- save the file
+  
+#### Edit the .env file to load the Extensions
+
+Inside the `ckan-docker-git-master` directory, use `vi` to edit the `.env` file
+to add the `dcat` and `structured_data` plugins, as follows:
+
+- open the .env file:
+
+  ```
+  vi .env
+  ```
+- around line#69, change the `CKAN__PLUGINS` line to add the 2 extensions, such as:
+
+  ```
+  CKAN__PLUGINS="image_view text_view datatables_view datastore datapusher envvars dcat structured_data"
+  ```
+  
+- save the file
+  
+#### Rebuild the containers
+
+- build the Docker images
+  ```
+  docker compose -f docker-compose.yml build
+  ```
+  you should see a line mentioning the `RUN pip3 install -e` command that 
+  we defined in the Dockerfile.
+  
+  ![dcat install1](./images/dcat-install1.png)
+  
+- start the Docker containers
+  ```
+  docker compose up -d
+  ```
+  
+#### Check the status
+
+We can use the CKAN API to check if the new plugins were loaded successfully.
+
+- using the [Firefox](https://www.mozilla.org/en-CA/firefox/new/) browser (which
+  displays the JSON results nicely), goto: https://localhost:8443/api/action/status_show
+  
+- you should see a list of extensions that include both `dcat` and 
+  `structured_data`, such as:
+  
+  ![build install2](./images/dcat-install2.png)
+
+#### Connect to the CKAN container through commandline
+
+You will need to connect to the CKAN container through the commandline, which
+can be done through the following steps:
+
+- you will need to get the exact name of the CKAN container, which is easiest
+to see through Portainer.
+
+  ![ckan connect1](./images/ckan-connect1.png)
+  
+  You can see above that the container name is `ckan-docker-git-master-ckan-1`.
+  
+- assuming you are still at the `odis@` prompt, but if not:
+  - goto Start menu, choose "WSL"
+  - CMD window should open with an `odis@` prompt
+- execute the following, to connect to the CKAN container (replace "ckan-docker-git-master-ckan-1" with your container name) :
+  ```
+  docker exec -it ckan-docker-git-master-ckan-1 /bin/bash -c "export TERM=xterm; exec bash"
+  ```
+  
+  Your prompt should change to something like `ckan@af2e2e3ac57f`.  If you then
+  execute `pwd` you can see that you are in the `/srv/app/` directory, on the CKAN
+  container.
+  
+  ![ckan connect2](./images/ckan-connect2.png)
+  
+#### Install VI on the CKAN container
+
+If you get a `command not found` error when trying to open a file with `vi` 
+on the ckan container, you will have to first connect as root, and then install 
+`vim`, as follows:
+
+- execute the following, to connect to the CKAN container as root (replace "ckan-docker-git-master-ckan-1" with your container name) :
+  ```
+  docker exec -u root -it ckan-docker-git-master-ckan-1 /bin/bash
+  ```
+  
+- now update your local packages:
+  ```
+  apt-get update
+  ```
+  
+- finally install `vim`:
+  ```
+  apt-get install vim
+  ```
+  
+Then retry your `vi `command.
+  
+#### Modify the CKAN template
+
+Once connected to the CKAN container (see previous step), you can edit
+the `read_base.html` Jinja2 template files, to add a JSON-LD block,
+as follows:
+
+- now use `vi` to edit the `read_base.html` file:
+  ```
+  vi src/ckan/ckan/templates/package/read_base.html
+  ```
+- in the `{% block head_extras -%}` section, around line#13, paste 
+  the following:
+  ```
+  {% block structured_data %}
+    <script type="application/ld+json">
+  
+    </script>
+  {% endblock %}
+  ```
+  
+- save the file, and `exit` the container
+
+- back on your host machine, restart the CKAN container
+  ```
+  docker restart ckan-docker-git-master-ckan-1
+  ```
+  
+- if you have added a Dataset, now if you right-click on the dataset's 
+  main page (that url would be something like https://localhost:8443/dataset/point-test )
+  you should see a `<script type="application/ld+json">` section inside
+  the page source (which is the embedded JSON-LD, that is required by ODIS),
+  similar to the following snippet:
+  ```json
+    {
+        "@context": {
+            "brick": "https://brickschema.org/schema/Brick#",
+            "csvw": "http://www.w3.org/ns/csvw#",
+            "dc": "http://purl.org/dc/elements/1.1/",
+            "dcam": "http://purl.org/dc/dcam/",
+            "dcat": "http://www.w3.org/ns/dcat#",
+            "dcmitype": "http://purl.org/dc/dcmitype/",
+            "dcterms": "http://purl.org/dc/terms/",
+            "doap": "http://usefulinc.com/ns/doap#",
+            "foaf": "http://xmlns.com/foaf/0.1/",
+            "geo": "http://www.opengis.net/ont/geosparql#",
+            "odrl": "http://www.w3.org/ns/odrl/2/",
+            "org": "http://www.w3.org/ns/org#",
+            "owl": "http://www.w3.org/2002/07/owl#",
+            "prof": "http://www.w3.org/ns/dx/prof/",
+            "prov": "http://www.w3.org/ns/prov#",
+            "qb": "http://purl.org/linked-data/cube#",
+            "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+            "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+            "schema": "http://schema.org/",
+            "sh": "http://www.w3.org/ns/shacl#",
+            "skos": "http://www.w3.org/2004/02/skos/core#",
+            "sosa": "http://www.w3.org/ns/sosa/",
+            "ssn": "http://www.w3.org/ns/ssn/",
+            "time": "http://www.w3.org/2006/time#",
+            "vann": "http://purl.org/vocab/vann/",
+            "void": "http://rdfs.org/ns/void#",
+            "wgs": "https://www.w3.org/2003/01/geo/wgs84_pos#",
+            "xsd": "http://www.w3.org/2001/XMLSchema#"
+        },
+        "@graph": [
+            {
+                "@id": "https://localhost:8443/dataset/2ac53087-e1b1-4301-9c85-6461f81cf595",
+                "@type": "schema:Dataset",
+                "schema:creator": {
+                    "@id": "https://localhost:8443/organization/e37afbc0-4270-4e26-ac15-036590485814"
+                },
+                "schema:dateModified": "2025-01-17T19:20:38.929522",
+                "schema:datePublished": "2025-01-17T19:20:10.193510",
+                "schema:distribution": {
+                    "@id": "https://localhost:8443/dataset/2ac53087-e1b1-4301-9c85-6461f81cf595/resource/883a935f-02bf-4d96-9a40-02e8566ddbed"
+                },
+                "schema:includedInDataCatalog": {
+                    "@id": "_:N327f3587332f414ca7f4844b454cffe9"
+                },
+                "schema:license": "http://www.opendefinition.org/licenses/cc-by-sa",
+                "schema:name": "Point test",
+                "schema:publisher": {
+                    "@id": "https://localhost:8443/organization/e37afbc0-4270-4e26-ac15-036590485814"
+                },
+                "schema:url": "https://localhost:8443/dataset/point-test"
+            },
+            {
+                "@id": "_:N327f3587332f414ca7f4844b454cffe9",
+                "@type": "schema:DataCatalog",
+                "schema:description": "",
+                "schema:name": "CKAN",
+                "schema:url": "https://localhost:8443"
+            },
+            {
+                "@id": "https://localhost:8443/organization/e37afbc0-4270-4e26-ac15-036590485814",
+                "@type": "schema:Organization",
+                "schema:contactPoint": [
+                    {
+                        "@id": "_:N8f3eab00d6a7479d889d86e1cdba9894"
+                    },
+                    {
+                        "@id": "_:N55713fa9e8ff489aa8ea185298b1344e"
+                    }
+                ],
+                "schema:name": "OIH"
+            },
+            {
+                "@id": "_:N8f3eab00d6a7479d889d86e1cdba9894",
+                "@type": "schema:ContactPoint",
+                "schema:contactType": "customer service",
+                "schema:url": "https://localhost:8443"
+            },
+            {
+                "@id": "_:N55713fa9e8ff489aa8ea185298b1344e",
+                "@type": "schema:ContactPoint",
+                "schema:contactType": "customer service",
+                "schema:url": "https://localhost:8443"
+            },
+            {
+                "@id": "https://localhost:8443/dataset/2ac53087-e1b1-4301-9c85-6461f81cf595/resource/883a935f-02bf-4d96-9a40-02e8566ddbed",
+                "@type": "schema:DataDownload",
+                "schema:contentSize": 57,
+                "schema:encodingFormat": "JSON",
+                "schema:name": "point.json",
+                "schema:url": "https://localhost:8443/dataset/2ac53087-e1b1-4301-9c85-6461f81cf595/resource/883a935f-02bf-4d96-9a40-02e8566ddbed/download/point.json"
+            }
+        ]
+    }  
+  ```
+  
+### Generate a sitemap for your CKAN instance
+
+A sitemap is required to allow ODIS to locate and harvest your 
+CKAN catalogue.  We will implement the [ckanext-sitemap](https://github.com/datopian/ckanext-sitemap) 
+extension, as follows.
+
+#### Edit the Dockerfile to install the ckanext-sitemap extension
+
+- assuming you are still at the `odis@` prompt, but if not:
+  - goto Start menu, choose "WSL"
+  - CMD window should open with an `odis@` prompt
+- execute `cd ckan-docker-git-master`
+- now use `vi` to add in the required section for the ckanext-dcat plugin into
+  the `Dockerfile` :
+  ```
+  #use vi to open the Dockerfile
+  vi ckan/Dockerfile
+  #to make your changes, first press your "i" key (for INSERT mode), and
+    #then edit the desired lines
+  #then save with the command
+  :wq
+  ```
+- around line#6 (after the DCAT section) paste the following into the `Dockerfile`:
+  ```
+  ### SITEMAP ###
+  RUN  pip3 install -e 'git+https://github.com/datopian/ckanext-sitemap.git@master#egg=ckanext-sitemap'  && \
+       pip3 install -r https://raw.githubusercontent.com/datopian/ckanext-sitemap/refs/heads/master/requirements.txt
+  ```
+- save the file
+  
+#### Edit the .env file to load the Extension
+
+Inside the `ckan-docker-git-master` directory, use `vi` to edit the `.env` file
+to add the `dcat` and `structured_data` plugins, as follows:
+
+- open the .env file:
+
+  ```
+  vi .env
+  ```
+- around line#69, change the `CKAN__PLUGINS` line to add the `sitemap` extension, such as:
+
+  ```
+  CKAN__PLUGINS="image_view text_view datatables_view datastore datapusher envvars dcat structured_data sitemap"
+  ```
+  
+- save the file
+  
+#### Rebuild the containers
+
+- build the Docker images
+  ```
+  docker compose -f docker-compose.yml build
+  ```
+  
+- start the Docker containers
+  ```
+  docker compose up -d
+  ```
+  
+#### Check the status
+
+We can use the CKAN API to check if the new plugin was loaded successfully.
+
+- using the [Firefox](https://www.mozilla.org/en-CA/firefox/new/) browser (which
+  displays the JSON results nicely), goto: https://localhost:8443/api/action/status_show
+  
+- you should see a list of extensions that includes `sitemap`, such as:
+  
+  ![sitemap install1](./images/sitemap-install1.png)
+  
+#### Connect to the CKAN container and Generate the sitemap
+
+The sitemap extension requires us to run a command on the CKAN container to 
+generate the sitemap, so we must connect to the container, as follows:
+
+```{note}
+As there could be a permissions issue when generating (and writing) the sitemap 
+to the folder, we will connect as `root`.
+```
+
+- execute the following, to connect to the CKAN container (replace "ckan-docker-git-master-ckan-1" with your container name) :
+  ```
+  docker exec -u root -it ckan-docker-git-master-ckan-1 /bin/bash -c "export TERM=xterm; exec bash"
+  ```
+  
+- in that default `/srv/app/` directory, we can run the command to generate the 
+  sitemap:
+  ```
+  ckan ckanext-sitemap generate
+  ```
+  
+  ![sitemap install2](./images/sitemap-install2.png)
+
+- the sitemap will be created in the following folder:
+  ```
+  /srv/app/src/ckanext-sitemap/ckanext/sitemap/public
+  ```
+  
+- we need to modify the permissions of the folder where the sitemap was generated
+  (especially for when it will be auto-generated later), by executing the
+  following commands:
+  ```
+  chown -R ckan:ckan-sys /srv/app/src/ckanext-sitemap/ckanext/sitemap/public/
+  chmod -R 775 /srv/app/src/ckanext-sitemap/ckanext/sitemap/public/
+  ```    
+
+#### View the sitemap
+
+The sitemap will be visible in your browser now, at the root of your
+instance, such as: https://localhost:8443/sitemap_index.xml
+
+```{tip}
+You can learn more about sitemaps in the [Publishing section](https://book.odis.org/publishing/publishing.html#sitemap-xml) 
+of the ODIS Book.
+```
+
+- note that the extension has generated a sitemap index (usually a list of 
+  individual sitemaps), so you can copy the `<loc>` url and open it in a new tab, 
+  to view the actual sitemap, such as https://localhost:8443/sitemap-0.xml
+  
+- you should now see a list of `<loc>` values for your catalogue, including your
+  test dataset record, such as:
+  
+  ![sitemap install3](./images/sitemap-install3.png)
+  
+#### Configure the sitemap extension
+
+There are several environment variables that can be set in the `ckan.ini` file,
+such as how often the sitemap is auto-generated.  See the full list of possible
+settings [here](https://github.com/datopian/ckanext-sitemap?tab=readme-ov-file#configuration).
+
+At the minimum, you should likely set the variable `autorenew` to `true`, 
+as follows:
+
+- on the `CKAN` container, edit the `ckan.ini` file
+  ```
+  vi /srv/app/ckan.ini
+  ```
+  
+- insert the following at the bottom of the file:
+  ```
+  ckanext.sitemap.autorenew = True
+  ```
+  
+- now `exit` the CKAN container, and restart it, such as:
+  ```
+  docker restart ckan-docker-git-master-ckan-1
+  ```
+  
+- now your sitemap will be regenerated, if the sitemap link is visited and
+  the sitemap is older than 8 hours.
+  
+#### Create an entry in the ODIS Catalogue and point to sitemap
+
+ODIS will use your entry in the [ODIS Catalogue](https://catalogue.odis.org/) 
+("ODISCat") to find and harvest your sitemap.  Be sure to go through the quick 
+steps in the [Getting Started with ODIS](https://book.odis.org/gettingStarted.html) 
+section of the ODIS Book, to make sure that your ODISCat entry is created properly.
+
+### Docker Troubleshooting
+
+#### Check Logs
+
+- you can check logs through the commandline, passing the name of the container,
+  such as:
+  ```
+  docker logs ckan-docker-git-master-ckan-1
+  ``` 
+- alternatively you can use Portainer to check the logs of a container, just 
+  click on the little file icon beside the container name, such as:
+  
+  ![logs](./images/logs.png)
+  
+#### Restart container
+
+- you can restart a container through the commandline, passing the name of the 
+  container, such as:
+  ```
+  docker restart ckan-docker-git-master-ckan-1
+  ``` 
+- alternatively you can use Portainer to restart container, just 
+  select the container on the left, and then click the `Restart` button above, 
+  such as:
+  
+  ![restart](./images/restart.png)
+  
+#### Remove all containers
+
+Sometimes you might want to start over, so you can execute the following to 
+delete all Docker containers and cache.
+
+```{caution}
+This will remove all existing containers, even those that are running.
+```
+
+- remove all containers:
+  ```
+  sudo docker rm -f $(sudo docker ps -a -q)
+  ``` 
+- remove cache:
+  ```
+  docker system prune -a
+  ```
   
 ## Option 2: Install CKAN & dependencies manually
 
